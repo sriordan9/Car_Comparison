@@ -1,0 +1,58 @@
+/* reset browser styles */
+* {
+	box-sizing: border-box;
+	margin: 0;
+    padding: 0;
+    vertical-align: baseline;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1.2;
+}
+ol { 
+	padding-left: 1.4em;
+	list-style: decimal;
+}
+ul {
+	padding-left: 1.4em
+	list-style: square;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+} 
+/* end reset browser styles */
+
+/* Main Start----------------------- */
+/* main {
+    display: flex;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+}
+section{
+    border: 1px solid black;
+}
+button {
+    float: right;
+}
+input[placeholder="URL"] {
+	display: block;
+	margin: auto;
+	text-align: center;
+	width: 75%
+}
+fieldset {
+	border: 0;
+    display: flex;
+    flex-direction: column;
+}
+div > * {
+	display: inline-block;
+	width: 50%;
+}
+div input {
+	float: left;
+} */
+/* End Main----------------------- */
