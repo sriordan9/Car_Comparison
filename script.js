@@ -1,6 +1,5 @@
 class Model {
-    constructor(){
-
+    constructor() {
         // Local car "encyclopedia"
         this.car = [
             {make: 'FORD', model: 'Fiesta', type: 'Coupe', engine: 'V8'},    
@@ -16,21 +15,21 @@ class Model {
         this.userInputModels;
     }
 
-    capitalize(string){
+    capitalize(string) {
         return `${string.charAt(0).toUpperCase()}${string.slice(1).toLowerCase()}`;
     }
 
     // Filters car array for car makes matching user input
-    listInputMakes(){
+    listInputMakes() {
         return this.car.filter(obj => obj.make.includes(this.userInputMakes));
     }
 
      // Filters car array for car makes and models matching user inputs
-    listInputModels(){
+    listInputModels() {
         return this.listInputMakes().filter(obj => obj.model.includes(this.userInputModels));
     }
-
-    modelSelection(makes, models){
+    
+    modelSelection(makes, models) {
         this.userInputMakes = makes.toUpperCase();
         this.userInputModels = this.capitalize(models);
 
@@ -43,43 +42,82 @@ class Model {
         console.log(this.listInputMakes());
 
         console.log(this.listInputModels()); 
-
-        // Turn the array objects into one-line lists so they can be put into the dropdown
-        
     }
+
 }
 
-function controller(){
-    const projectModel = new Model();
-        let userInputMakes;
-        let userInputModels;
+class View {
+    constructor() {
 
-    document.querySelector(`button[name="done-btn"]`).addEventListener('click', function(){
-        userInputMakes = document.querySelector(`input[name="make"]`).value;
-        userInputModels = document.querySelector(`input[name="model"]`).value;
-
-        projectModel.modelSelection(userInputMakes, userInputModels);
-    });
-    document.addEventListener('keypress', function(event){
-        userInputMakes = document.querySelector(`input[name="make"]`).value;
-        userInputModels = document.querySelector(`input[name="model"]`).value;
-
-        if(event.keyCode === 13 || event.which === 13){
-            projectModel.modelSelection(userInputMakes, userInputModels);
-        } 
-    });
+    }
+    
+    // Changes arrays into a simple list
+    arrayToList(array) {
+        let valuesArray = array.map(keyValPair => `${keyValPair.make} ${keyValPair.model} ${keyValPair.type}`);
+        return valuesArray.join(', ');
+    }
     
 }
 
-window.onload = controller;
+class Controller {
+    constructor() {
+        this.projectModel = new Model();
+        this.projectView = new View();
+        this.userInputMakes;
+        this.userInputModels;
+        this.doneButton();
+        this.enterKey();
+    }
+
+    doneButton() {
+        document.querySelector(`button[name="done-btn"]`).addEventListener('click', () => {
+            this.userInputMakes = document.querySelector(`input[name="make"]`).value;
+            this.userInputModels = document.querySelector(`input[name="model"]`).value;
+
+            this.projectModel.modelSelection(this.userInputMakes, this.userInputModels);
+
+            this.dropDownList();
+        });
+    } 
+
+    enterKey() {
+        document.addEventListener('keypress', event => {
+            this.userInputMakes = document.querySelector(`input[name="make"]`).value;
+            this.userInputModels = document.querySelector(`input[name="model"]`).value;
+    
+            if(event.keyCode === 13 || event.which === 13) {
+                this.projectModel.modelSelection(this.userInputMakes, this.userInputModels);
+                this.dropDownList();
+            } 
+        });
+    }  
+
+    dropDownList() {
+        console.log(this.projectView.arrayToList(this.projectModel.listInputModels()));
+        
+        // console.log(model.arrayToList(this.projectModel.listInputModels()));
+        // 1) make list of cars (call model function)
+        // 2) select dropdown (from controller)
+        // 3) make list in html form (call view function)
+        
+        // const dropDown = document.querySelector(`select[name="models"]`);
+
+    }
+
+}
+
+function startup() {
+    const projectController = new Controller();
+}
+
+window.onload = startup;
 
 // GAMEPLAN
-    // 1) Transform input into website pattern (all caps, first letter cap, etc)
-    // 2) Create View and Controler classes
-    // 3) Console.log car info as a one-line-lists rather than array of objects
-    // 4) Place one-line-list in dropdown menu of page
-    // 5) specs from local car list should be entered in output fields
-    // 6) use arrow functions to add eventlisteners to each section
+    // 1) Remove case sensitivity of car arrays
+    // 2) Console.log car info as a one-line-lists rather than array of objects
+    // 3) Place one-line-list in dropdown menu of page
+    // 4) specs from local car list should be entered in output fields
+    // 5) use arrow functions to add eventlisteners to each section
 
 
 
