@@ -29,9 +29,6 @@
                         <option value="mustang"></option>
                         <option value="camaro">Camaro</option>
                     </select>
-                    <select name="years">
-
-                    </select>
                     <button type="button" name="done-btn">Done</button>
                     <fieldset>
                         <div>
@@ -59,7 +56,16 @@
                 </button>
                 <h2>Car Name</h2>                    
                 <form>
-                    <input type="text" name="URL" placeholder="URL">
+                    <div class="flex">
+                        <select name="years"></select>
+                        <select name="makes"></select>
+                    </div>
+                    <div class="flex">
+                        <select name="models"></select>
+                        <select name="trims"></select>
+                    </div>
+                    <button class="blah" type="button" name="search">Search</button>
+                    <!-- <input type="text" name="URL" placeholder="URL"> -->
                     <fieldset>
                         <div>
                             <input type="text">

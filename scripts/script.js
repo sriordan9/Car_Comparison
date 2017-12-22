@@ -13,6 +13,7 @@ class Model {
         ];
         this.userInputMakes;
         this.userInputModels;
+        this.getYears;
     }
 
     // Might not need this later, may be able to
@@ -45,29 +46,50 @@ class Model {
         console.log(this.listInputModels()); 
     }
 
+    // For Car API ---------------------->
+    getYears () {
+        let yearsArray = [];
+        let link = 'https://www.carqueryapi.com/api/0.3/?callback=?&cmd=getYears';
+        // let selectedYear = user input and place this variable in line below as value for 'year'
+        $.getJSON(this.base_url = `${link}?callback=?`, {cmd:"getYears"},
+        (data) => {
+            const years = data.Years;
+            // let yearsArray = [];
+            for (var i = Number(years.min_year); i <= years.max_year; i++) {
+            // console.log(i);
+            yearsArray.push(i);
+                            
+            }
+            // return yearsArray;
+           
+        }); return yearsArray;
+    } 
+
 }
 
 class View {
     constructor() {
 
     }
-    
+    // For local car array------------------->
     // Changes arrays into a simple list of html "option" elements for dropdown menu
     arrayToList(array) {
         let valuesArray = array.map(keyValPair => 
             `<option>${keyValPair.make} ${keyValPair.model} ${keyValPair.type}</option>`);            
         return `<option selected="selected" disabled="disabled">Select model</option> ${valuesArray.join('')}`;
     }
+    // Updates UI with model options in dropdown menu
+    dropDownList(optionList) {
+        console.log(optionList);
+        document.querySelector(`select[name="models"]`).innerHTML = optionList;
+    }
+
+    // For Car API-------------------------->
     //Changes arrays into simple list of html options for API
     arrayToListApi(array) {
         let valuesArray = array.map(year => 
             `<option>${year}</option>`);            
         return `<option selected="selected" disabled="disabled">Select year</option> ${valuesArray.join('')}`;
-    }
-    // Updates UI with model options in dropdown menu
-    dropDownList(optionList) {
-        console.log(optionList);
-        document.querySelector(`select[name="models"]`).innerHTML = optionList;
     }
     // Updates UI with years options
     dropDownListApi(optionList) {
@@ -113,7 +135,7 @@ class Controller {
             } 
         });
     } 
-    
+    // Pull only US makes
     carMakes () {
         let link = 'https://www.carqueryapi.com/api/0.3/?callback=?&cmd=getMakes&year=2000&sold_in_us=1';
         // let selectedYear = user input and place this variable in line below as value for 'year'
@@ -129,23 +151,30 @@ class Controller {
         });
     }
 
-    carYears () {
-        let link = 'https://www.carqueryapi.com/api/0.3/?callback=?&cmd=getYears';
-        // let selectedYear = user input and place this variable in line below as value for 'year'
-        $.getJSON(this.base_url = `${link}?callback=?`, {cmd:"getYears"},
-        (data) => {
-            const years = data.Years;
-            let yearsArray = [];
-            for (var i = Number(years.min_year); i <= years.max_year; i++) {
-            // console.log(i);
-            yearsArray.push(i);
+    // carYears () {
+    //     let link = 'https://www.carqueryapi.com/api/0.3/?callback=?&cmd=getYears';
+    //     // let selectedYear = user input and place this variable in line below as value for 'year'
+    //     $.getJSON(this.base_url = `${link}?callback=?`, {cmd:"getYears"},
+    //     (data) => {
+    //         const years = data.Years;
+    //         let yearsArray = [];
+    //         for (var i = Number(years.min_year); i <= years.max_year; i++) {
+    //         // console.log(i);
+    //         yearsArray.push(i);
                             
-            }
-            // return yearsArray;
-            this.projectView.arrayToListApi(yearsArray);
-            this.projectView.dropDownListApi(this.projectView.arrayToListApi(yearsArray));
+    //         }
+    //         // return yearsArray;
+    //         this.projectView.arrayToListApi(yearsArray);
+    //         this.projectView.dropDownListApi(this.projectView.arrayToListApi(yearsArray));
 
-        });
+    //     });
+    // }
+    carYears () {
+        console.log(this.projectModel.getYears());
+        // let yearsArray= this.projectModel.getYears();
+        // this.projectView.arrayToListApi(this.projectModel.getYears());
+        this.projectView.dropDownListApi(this.projectView.arrayToListApi(this.projectModel.getYears()));
+
     }
 
 
