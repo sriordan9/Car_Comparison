@@ -58,10 +58,21 @@ class View {
             `<option>${keyValPair.make} ${keyValPair.model} ${keyValPair.type}</option>`);            
         return `<option selected="selected" disabled="disabled">Select model</option> ${valuesArray.join('')}`;
     }
+    //Changes arrays into simple list of html options for API
+    arrayToListApi(array) {
+        let valuesArray = array.map(year => 
+            `<option>${year}</option>`);            
+        return `<option selected="selected" disabled="disabled">Select year</option> ${valuesArray.join('')}`;
+    }
     // Updates UI with model options in dropdown menu
     dropDownList(optionList) {
         console.log(optionList);
         document.querySelector(`select[name="models"]`).innerHTML = optionList;
+    }
+    // Updates UI with years options
+    dropDownListApi(optionList) {
+        // console.log(optionList);
+        document.querySelector(`select[name="years"]`).innerHTML = optionList;
     }
     
 }
@@ -76,7 +87,8 @@ class Controller {
         this.enterKey();
         this.ajaxRequest = new XMLHttpRequest();
         // this.pullWebPage();
-        this.carQuery();
+        this.carMakes;
+        this.carYears();
     }
     // Event handler when user clicks done button after filling out make/model fields
     doneButton() {
@@ -102,7 +114,7 @@ class Controller {
         });
     } 
     
-    carQuery () {
+    carMakes () {
         let link = 'https://www.carqueryapi.com/api/0.3/?callback=?&cmd=getMakes&year=2000&sold_in_us=1';
         // let selectedYear = user input and place this variable in line below as value for 'year'
         $.getJSON(this.base_url = `${link}?callback=?`, {cmd:"getMakes", year:"2009"},
@@ -113,6 +125,26 @@ class Controller {
                 
                 
             }
+            
+        });
+    }
+
+    carYears () {
+        let link = 'https://www.carqueryapi.com/api/0.3/?callback=?&cmd=getYears';
+        // let selectedYear = user input and place this variable in line below as value for 'year'
+        $.getJSON(this.base_url = `${link}?callback=?`, {cmd:"getYears"},
+        (data) => {
+            const years = data.Years;
+            let yearsArray = [];
+            for (var i = Number(years.min_year); i <= years.max_year; i++) {
+            // console.log(i);
+            yearsArray.push(i);
+                            
+            }
+            // return yearsArray;
+            this.projectView.arrayToListApi(yearsArray);
+            this.projectView.dropDownListApi(this.projectView.arrayToListApi(yearsArray));
+
         });
     }
 
