@@ -56,13 +56,12 @@ class Model {
             const years = data.Years;
             // let yearsArray = [];
             for (var i = Number(years.min_year); i <= years.max_year; i++) {
-            // console.log(i);
-            yearsArray.push(i);
-                            
+                console.log(i);
+                yearsArray.push(i);
             }
-            // return yearsArray;
-           
-        }); return yearsArray;
+            console.log(yearsArray);
+        }); 
+        return yearsArray;
     } 
 
 }
@@ -85,18 +84,21 @@ class View {
     }
 
     // For Car API-------------------------->
-    //Changes arrays into simple list of html options for API
+    // Changes arrays into simple list of html options for API
     arrayToListApi(array) {
-        let valuesArray = array.map(year => 
-            `<option>${year}</option>`);            
-        return `<option selected="selected" disabled="disabled">Select year</option> ${valuesArray.join('')}`;
+        console.log(array);
+        console.log("Array length: " + array.length);
+        let valuesArray = array.map(year => `<option>${year}</option>`);
+        console.log(valuesArray);         
+        return `<option selected="selected" disabled="disabled">Select year</option>${valuesArray.join('')}`;
     }
     // Updates UI with years options
-    dropDownListApi(optionList) {
+    dropDownListApi(element, optionList) {
         // console.log(optionList);
-        document.querySelector(`select[name="years"]`).innerHTML = optionList;
+        // FIND WAY TO REUSE THIS FOR ALL DATA
+        // element = `select[name="years"]`;
+        document.querySelector(element).innerHTML = optionList;
     }
-    
 }
 
 class Controller {
@@ -108,9 +110,8 @@ class Controller {
         this.doneButton();
         this.enterKey();
         this.ajaxRequest = new XMLHttpRequest();
-        // this.pullWebPage();
-        this.carMakes;
-        this.carYears();
+        this.updateDropdowns;
+        this.pullApiData();
     }
     // Event handler when user clicks done button after filling out make/model fields
     doneButton() {
@@ -136,81 +137,69 @@ class Controller {
         });
     } 
     // Pull only US makes
-    carMakes () {
-        let link = 'https://www.carqueryapi.com/api/0.3/?callback=?&cmd=getMakes&year=2000&sold_in_us=1';
-        // let selectedYear = user input and place this variable in line below as value for 'year'
-        $.getJSON(this.base_url = `${link}?callback=?`, {cmd:"getMakes", year:"2009"},
-        function(data) {
-            const makes = data.Makes;
-            for (var i = 0; i < makes.length; i++) {
-                console.log(makes[i].make_display);
-                
-                
-            }
-            
-        });
-    }
-
-    // carYears () {
-    //     let link = 'https://www.carqueryapi.com/api/0.3/?callback=?&cmd=getYears';
+    // carMakes () {
+    //     let link = 'https://www.carqueryapi.com/api/0.3/?callback=?&cmd=getMakes&year=2000&sold_in_us=1';
     //     // let selectedYear = user input and place this variable in line below as value for 'year'
-    //     $.getJSON(this.base_url = `${link}?callback=?`, {cmd:"getYears"},
-    //     (data) => {
-    //         const years = data.Years;
-    //         let yearsArray = [];
-    //         for (var i = Number(years.min_year); i <= years.max_year; i++) {
-    //         // console.log(i);
-    //         yearsArray.push(i);
-                            
+    //     $.getJSON(this.base_url = `${link}?callback=?`, {cmd:"getMakes", year:"2009"},
+    //     function(data) {
+    //         const makes = data.Makes;
+    //         for (var i = 0; i < makes.length; i++) {
+    //             console.log(makes[i].make_display);
+                
+                
     //         }
-    //         // return yearsArray;
-    //         this.projectView.arrayToListApi(yearsArray);
-    //         this.projectView.dropDownListApi(this.projectView.arrayToListApi(yearsArray));
-
+            
     //     });
     // }
-    carYears () {
-        console.log(this.projectModel.getYears());
-        // let yearsArray= this.projectModel.getYears();
-        // this.projectView.arrayToListApi(this.projectModel.getYears());
-        this.projectView.dropDownListApi(this.projectView.arrayToListApi(this.projectModel.getYears()));
-
+    // Calls two functions from the View to wrap array components in <option> tags, then 
+    // places those new elements into the index.html file. Takes two parameters: the <select> element 
+    // where the info will be placed and the data to be placed.
+    updateDropdowns(element, dropdownData) {
+        this.projectView.dropDownListApi(element, this.projectView.arrayToListApi(dropdownData));
     }
 
-
-
-
-    // pullWebPage() {
-    //     this.ajaxRequest.onreadystatechange = () => {
-    //         if(this.ajaxRequest.readyState == 1){
-    //             console.log("Established server connection.");
-    //         }
-    //         else if(this.ajaxRequest.readyState == 2){
-    //             console.log("Request received by server.");
-    //         }
-    //         else if(this.ajaxRequest.readyState == 3){
-    //             console.log("Processing request.");
-    //         }
-    //         else if(this.ajaxRequest.readyState == 4){
-    //             console.log("Done loading!");
-    //             if(this.ajaxRequest.status == 200){
-    //                 console.log('our file has loaded!');
-    //                 let jsonObj = JSON.parse(this.ajaxRequest.responseText, (cmd, value) => console.log(cmd))
-    //                 // document.querySelector(`option[value="mustang"]`).innerHTML = this.ajaxRequest.responseText;
-    //                 // document.querySelector(`option[value="mustang"]`).innerHTML = jsonObj.;
-    //             }
-    //             else{
-    //                 console.log("Status error: " + this.ajaxRequest.status);
-    //             }
-    //         }
-    //         else{
-    //             console.log("Ignored readyState: " + this.ajaxRequest.readyState);
-    //         }
-    //     }
-    //     this.ajaxRequest.open("Get", "http://happycoding.io/tutorials/javascript/example-ajax-files/html-welcome.html", true);
-    //     this.ajaxRequest.send();   
-    // }
-    
+    pullApiData () {
+        // Links to access car API data
+        let link = {years: 'https://www.carqueryapi.com/api/0.3/?callback=?&cmd=getYears',
+                    makes: 'https://www.carqueryapi.com/api/0.3/?callback=?&cmd=getMakes&year=2000&sold_in_us=1',
+                    models: 'https://www.carqueryapi.com/api/0.3/?callback=?&cmd=getModels&make=ford&year=2005&sold_in_us=1&body=SUV',
+                    trims: 'https://www.carqueryapi.com/api/0.3/?callback=?&cmd=getTrims&[params'};
+        // Pull data of years available            
+        // let selectedYear = user input and place this variable in line below as value for 'year'
+        $.getJSON(this.base_url = `${link.years}?callback=?`, {cmd:"getYears"},
+        (data) => {
+            const years = data.Years;
+            const yearsArray = [];
+            // API only has min and max year, this counts out all years in between
+            for (var i = Number(years.min_year); i <= years.max_year; i++) {
+            yearsArray.push(i);
+                            
+            }
+            console.log('completed first request');
+            this.updateDropdowns(`select[name="years"]`, yearsArray);
+            console.log("moved past first request");
+        });
+        // console.log("moved past first request");
+        // document.querySelector(`select[name="years"]`).addEventListener('onchange', () => {
+        //     console.log("I'm in");
+        //     let userYearInput = document.querySelector(`select[name="years"]`).value;
+        //     console.log(userYearInput);
+        //     // let selectedYear = user input and place this variable in line below as value for 'year'
+        //     $.getJSON(this.base_url = `${link.makes}?callback=?`, {cmd:"getMakes", year: userYearInput},
+        //     (data) => {
+        //         const makes = data.Makes;
+        //         const makesArray = []
+        //         for (var i = 0; i < makes.length; i++) {
+        //             // console.log(makes[i].make_display);
+        //             makesArray.push(makes[i].make_display);
+        //         }
+        //         console.log(makesArray);
+                
+        //         this.updateDropdowns(`select[name="makes"]`, makesArray);
+                
+        //     });
+        // });
+    }
 }
 
 function startup() {
