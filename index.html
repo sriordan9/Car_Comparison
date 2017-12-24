@@ -25,7 +25,9 @@
                     <!-- <input type="text" name="URL" placeholder="URL"> -->
                     <input type="text" name="make" placeholder="MAKE (FULL NAME)">
                     <input type="text" name="model" placeholder="MODEL">
-                    <select name="models">
+                    <!-- Removed 'name="models"' as an attribute of the following <select> tag
+                    because it was interfering with same attribute in second section while tesing -->
+                    <select>
                         <option value="mustang"></option>
                         <option value="camaro">Camaro</option>
                     </select>
@@ -57,6 +59,8 @@
                 <h2>Car Name</h2>                    
                 <form>
                     <div class="flex">
+                        <!-- WARNING: Do not change 'name' attribute. It is referenced in function 
+                        that pulls data from API in Controller and updates UI dropdown with list -->
                         <select name="years"></select>
                         <select name="makes"></select>
                     </div>
