@@ -61,12 +61,12 @@
                     <div class="flex">
                         <!-- WARNING: Do not change 'name' attribute. It is referenced in function 
                         that pulls data from API in Controller and updates UI dropdown with list -->
-                        <select name="years"></select>
-                        <select name="makes"></select>
+                        <select name="years" value="0"></select>
+                        <select name="makes0" value="0"></select>
                     </div>
                     <div class="flex">
-                        <select name="models"></select>
-                        <select name="trims"></select>
+                        <select name="models0" value="0"></select>
+                        <select name="trims0" value="0"></select>
                     </div>
                     <button class="blah" type="button" name="search">Search</button>
                     <!-- <input type="text" name="URL" placeholder="URL"> -->
@@ -96,7 +96,18 @@
                 </button>
                 <h2>Car Name</h2>                    
                 <form>
-                    <input type="text" name="URL" placeholder="URL">
+                    <div class="flex">
+                        <!-- WARNING: Do not change 'name' attribute. It is referenced in function 
+                        that pulls data from API in Controller and updates UI dropdown with list -->
+                        <select name="years" value="1"></select>
+                        <select name="makes1" value="1"></select>
+                    </div>
+                    <div class="flex">
+                        <select name="models1" value="1"></select>
+                        <select name="trims1" value="1"></select>
+                    </div>
+                    <button class="blah" type="button" name="search">Search</button>
+                    <!-- <input type="text" name="URL" placeholder="URL"> -->
                     <fieldset>
                         <div>
                             <input type="text">
