@@ -93,10 +93,21 @@ class View {
     }
     // Updates UI with years options
     dropDownListApi(element, optionList) {
-        // console.log(optionList);
-        // FIND WAY TO REUSE THIS FOR ALL DATA
-        // element = `select[name="years"]`;
-        document.querySelector(element).innerHTML = optionList;
+        // document.querySelector(element).innerHTML = optionList;
+        // USE IF STATEMENT ONLY FOR TESTING selectNodeChild FUNCTION. Else portion is for current working code 
+        if(element === "years") {
+            const section = document.getElementsByName(element);
+            
+            // For statement puts years into dropdowns of all sections containing a '<select name="years">'
+            // USE ONLY FOR TESTING selectNodeChild FUNCTION. Else portion is for current working code 
+            for (var i = 0; i < section.length; i++) {
+                section[i].innerHTML = optionList;
+                console.log(section[i]);
+                
+            }  
+        } else {
+            document.querySelector(element).innerHTML = optionList;
+        }      
     }
 }
 
@@ -110,10 +121,11 @@ class Controller {
         this.enterKey();
         this.ajaxRequest = new XMLHttpRequest();
         this.updateDropdowns;
-        this.pullApiData();
+        // this.pullApiData();
         this.userYearInput;
         this.userMakeInput;
         this.userModelInput;
+        this.selectNodeChild ();
     }
     // Event handler when user clicks done button after filling out make/model fields
     doneButton() {
@@ -207,6 +219,79 @@ class Controller {
                         this.updateDropdowns(`select[name="trims"]`, trimsArray);
             });
         });
+    }
+    // place in variable list
+    selectNodeChild() {
+
+        // Rename function, comment throughout new code, targetValue is what tells program where to insert next dropdown data list
+        // access being denied when trying to access data second time (for makes). That is last problem, try again another day.
+
+        // Links to access car API data
+        let link = 'https://www.carqueryapi.com/api/0.3/';
+        // Pull data of years available            
+        $.getJSON(this.base_url = `${link}?callback=?`, {cmd:"getYears"},(data) => {
+            const years = data.Years;
+            const yearsArray = [];
+            // API only has min and max year, this counts out all years in between
+            for (var i = Number(years.min_year); i <= years.max_year; i++) {
+                yearsArray.push(i);            
+            }
+            this.updateDropdowns("years", yearsArray); 
+            console.log("first request complete");           
+        });
+        console.log("Did I wait for first request?");           
+
+
+        const section = document.querySelectorAll('section');
+        section.forEach(() => {addEventListener('change', (e) => {
+            // when console logged it logs it four times, but why?
+            // there is only one target. Is the code written wrong?
+            let targetValue = e.target.getAttribute("value");
+
+            this.userYearInput = document.querySelectorAll(`select[name="years"]`)[targetValue].value;
+
+            $.getJSON(this.base_url = `${link}?callback=?`, 
+                {cmd:"getMakes", year: this.userYearInput, sold_in_us: "1"}, (data) => {
+                    const makes = data.Makes;
+                    const makesArray = []
+                    for (var i = 0; i < makes.length; i++) {
+                        makesArray.push(makes[i].make_display);
+                    }
+                    this.updateDropdowns(`select[name="makes${targetValue}"]`, makesArray);
+                    console.log("second request complete");           
+            });
+            console.log("did I wait for second request?");           
+            
+            document.querySelector(`select[name="makes${targetValue}"]`).addEventListener('change', () => {
+                this.userMakeInput = document.querySelector(`select[name="makes${targetValue}"]`).value;
+
+                $.getJSON(this.base_url = `${link}?callback=?`, 
+                    {cmd:"getModels", make: this.userMakeInput, year: this.userYearInput, sold_in_us: "1"},
+                        (data) => {
+                            const models = data.Models;
+                            const modelsArray = []
+                            for (var i = 0; i < models.length; i++) {
+                                modelsArray.push(models[i].model_name);
+                            }
+                            this.updateDropdowns(`select[name="models${targetValue}"]`, modelsArray);
+                });
+            });
+
+            document.querySelector(`select[name="models${targetValue}"]`).addEventListener('change', () => {
+                this.userModelInput = document.querySelector(`select[name="models${targetValue}"]`).value;
+    
+                $.getJSON(this.base_url = `${link}?callback=?`, 
+                    {cmd:"getTrims", model: this.userModelInput, make: this.userMakeInput,
+                        year: this.userYearInput, sold_in_us: "1"},(data) => {
+                            const trims = data.Trims;
+                            const trimsArray = []
+                            for (var i = 0; i < trims.length; i++) {
+                                trimsArray.push(trims[i].model_trim);
+                            }
+                            this.updateDropdowns(`select[name="trims${targetValue}"]`, trimsArray);
+                });
+            });            
+        })});
     }
 }
 
