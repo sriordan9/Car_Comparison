@@ -117,7 +117,7 @@ class Controller {
         this.projectView = new View();
         this.userInputMakes;
         this.userInputModels;
-        this.doneButton();
+        // this.doneButton(); Delete, from old first section setup
         this.enterKey();
         this.ajaxRequest = new XMLHttpRequest();
         this.updateDropdowns;
@@ -334,8 +334,6 @@ class Controller {
                 "V6 2dr Convertible (3.7L 6cyl 6M)", "V6 2dr Coupe (3.7L 6cyl 6M)"]
         };
         
-
-        // let link = 'https://www.carqueryapi.com/api/0.3/';
         // Pull data of years available            
         // $.getJSON(this.base_url = `${link}?callback=?`, {cmd:"getYears"},(data) => {
         const years = data.Years;
@@ -343,84 +341,63 @@ class Controller {
         for (var i = 0; i < years.length; i++) {
             yearsArray.push(years[i]); 
         }
-        // console.log(yearsArray);
-        this.updateDropdowns("years", yearsArray)
+        // Create list of elements from array and places in years dropdown
+        this.updateDropdowns("years", yearsArray);           
 
-//         // API only has min and max year, this counts out all years in between
-//         for (var i = Number(years.min_year); i <= years.max_year; i++) {
-//             yearsArray.push(i);            
-//         }
-//         this.updateDropdowns("years", yearsArray); 
-//         console.log("first request complete"); 
-//         console.log(yearsArray);
-//     // });
-//     console.log("Did I wait for first request?");           
-
-        // Add event listener to <main> over sections
+        // Event listener that starts the chain of other listeners. Once a dropdown 
+        // is changed to a value it populates the next dropdown.
         let self = this;
-        function dropdownListeners(e) {    
+        function dropdownListeners(e) {
+            // Find value of "value" attribute on the target element
             let targetValue = e.target.getAttribute("value");
+            this.userYearInput = document.querySelectorAll(`select[name="years"]`)[targetValue].value;
 
-            self.userYearInput = document.querySelectorAll(`select[name="years"]`)[targetValue].value;
-
+            // Populates makes dropdown based on year found from target element
             // $.getJSON(this.base_url = `${link}?callback=?`, 
-                // {cmd:"getMakes", year: this.userYearInput, sold_in_us: "1"},(data) => {
             const makes = data.Makes;
-            const makesArray = []
+            const makesArray = [];
             for (var i = 0; i < makes.length; i++) {
                 makesArray.push(makes[i]);
             }
             self.updateDropdowns(`select[name="makes${targetValue}"]`, makesArray);
-            console.log("second request complete"); 
-            console.log(makesArray);          
-            // });
-            console.log("did I wait for second request?");           
-        // }); 
-    
+            console.log(makesArray);                     
+            // Event listener for makes dropdown
             document.querySelector(`select[name="makes${targetValue}"]`).addEventListener('change', () => {
                 self.userMakeInput = document.querySelector(`select[name="makes${targetValue}"]`).value;
-
-        //             // $.getJSON(this.base_url = `${link}?callback=?`, 
-        //                 // {cmd:"getModels", make: this.userMakeInput, year: this.userYearInput, sold_in_us: "1"},
-        //                     (data) => {
+                // $.getJSON(this.base_url = `${link}?callback=?`, 
                 const models = data.Models;
-                const modelsArray = []
+                const modelsArray = [];
                 for (var i = 0; i < models.length; i++) {
                     modelsArray.push(models[i]);
                 }
+                // Populates model dropdown
                 self.updateDropdowns(`select[name="models${targetValue}"]`, modelsArray);
                 console.log(modelsArray);
             });
-
+            // Listener for a model to be selected
             document.querySelector(`select[name="models${targetValue}"]`).addEventListener('change', () => {
-                this.userModelInput = document.querySelector(`select[name="models${targetValue}"]`).value;
+                self.userModelInput = document.querySelector(`select[name="models${targetValue}"]`).value;
     
                 // $.getJSON(this.base_url = `${link}?callback=?`, 
-                    // {cmd:"getTrims", model: this.userModelInput, make: this.userMakeInput,
-                        // year: this.userYearInput, sold_in_us: "1"},(data) => {
-                            const trims = data.Trims;
-                            const trimsArray = []
-                            for (var i = 0; i < trims.length; i++) {
-                                trimsArray.push(trims[i]);
-                            }
-                            self.updateDropdowns(`select[name="trims${targetValue}"]`, trimsArray);
-                            console.log(trimsArray);
-                // });
+                const trims = data.Trims;
+                const trimsArray = [];
+                for (var i = 0; i < trims.length; i++) {
+                    trimsArray.push(trims[i]);
+                }
+                // Populates trims dropdown
+                self.updateDropdowns(`select[name="trims${targetValue}"]`, trimsArray);
+                console.log(trimsArray);
             });       
-
-
-        }
-
-
-        // document.querySelector(`select[value="0"]`).addEventListener('change', dropdownListeners.bind(event));
+        }; //)});
+        // Listeners for each of the years dropdown elements. Calls the initial listener to begin the
+        // event listener chain.
+        document.querySelector(`select[value="0"]`).addEventListener('change', dropdownListeners.bind(event));
         document.querySelector(`select[value="1"]`).addEventListener('change', dropdownListeners.bind(event));
         document.querySelector(`select[value="2"]`).addEventListener('change', dropdownListeners.bind(event));
         document.querySelector(`select[value="3"]`).addEventListener('change', dropdownListeners.bind(event));
 
-
-        // BUGS: 1) requests twice for make if year has been changed twice before picking make. 2) value three doesn't work when trying to choose make.
-        
-      
+        // BUGS: 1) if year has been chosen but changed to another value before choosing make, then request for
+        // make is sent twice.
     }
 }
 
