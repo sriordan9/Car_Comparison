@@ -22,16 +22,18 @@
                 </button> 
                 <h2>Car Name</h2>
                 <form>
+                    <div class="flex">
+                        <!-- WARNING: Do not change 'name' attribute. It is referenced in function 
+                        that pulls data from API in Controller and updates UI dropdown with list -->
+                        <select name="years" value="0"></select>
+                        <select name="makes0" value="0"></select>
+                    </div>
+                    <div class="flex">
+                        <select name="models0" value="0"></select>
+                        <select name="trims0" value="0"></select>
+                    </div>
+                    <button class="blah" type="button" name="search">Search</button>
                     <!-- <input type="text" name="URL" placeholder="URL"> -->
-                    <input type="text" name="make" placeholder="MAKE (FULL NAME)">
-                    <input type="text" name="model" placeholder="MODEL">
-                    <!-- Removed 'name="models"' as an attribute of the following <select> tag
-                    because it was interfering with same attribute in second section while tesing -->
-                    <select>
-                        <option value="mustang"></option>
-                        <option value="camaro">Camaro</option>
-                    </select>
-                    <button type="button" name="done-btn">Done</button>
                     <fieldset>
                         <div>
                             <p>:   value output</p>
