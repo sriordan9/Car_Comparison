@@ -117,17 +117,16 @@ class Controller {
         this.projectView = new View();
         this.userInputMakes;
         this.userInputModels;
-        // this.doneButton(); Delete, from old first section setup
+        // this.doneButton(); Delete, from old first section setup, or use code for search button
         this.enterKey();
         this.ajaxRequest = new XMLHttpRequest();
         this.updateDropdowns;
-        // this.pullApiData(); pulled data without recognizing which section was changed
         this.userYearInput;
         this.userMakeInput;
         this.userModelInput;
-        // this.selectNodeChild(); pulled data with target recognition, but too many requests
         // this.dataArrays();
         this.dataArraysFunction();
+        // this.finalDraftDataPull();
     }
     // Event handler when user clicks done button after filling out make/model fields
     doneButton() {
@@ -161,152 +160,7 @@ class Controller {
         this.projectView.dropDownListApi(element, this.projectView.arrayToListApi(dropdownData));
     }
 
-    pullApiData () {
-        // Links to access car API data
-        let link = 'https://www.carqueryapi.com/api/0.3/';
-        // Pull data of years available            
-        $.getJSON(this.base_url = `${link}?callback=?`, {cmd:"getYears"},(data) => {
-            const years = data.Years;
-            const yearsArray = [];
-            // API only has min and max year, this counts out all years in between
-            for (var i = Number(years.min_year); i <= years.max_year; i++) {
-                yearsArray.push(i);            
-            }
-            console.log(yearsArray);
-            this.updateDropdowns(`select[name="years"]`, yearsArray);            
-        });
-        // Listens for a year to be selected, once a change has been made for the year dropdown
-        // then a request is sent for the makes data based on the year the user chose
-        document.querySelector(`select[name="years"]`).addEventListener('change', () => {
-            this.userYearInput = document.querySelector(`select[name="years"]`).value;
-
-            $.getJSON(this.base_url = `${link}?callback=?`, 
-                {cmd:"getMakes", year: this.userYearInput, sold_in_us: "1"},(data) => {
-                    const makes = data.Makes;
-                    const makesArray = []
-                    for (var i = 0; i < makes.length; i++) {
-                        makesArray.push(makes[i].make_display);
-                    }
-                    console.log(makesArray);
-                    this.updateDropdowns(`select[name="makes"]`, makesArray);
-            });
-        });
-        // Listens for a make to be selected, once a change has been made for the car make dropdown
-        // then a request is sent for the models data based on the make the user chose
-        document.querySelector(`select[name="makes"]`).addEventListener('change', () => {
-            this.userMakeInput = document.querySelector(`select[name="makes"]`).value;
-
-            $.getJSON(this.base_url = `${link}?callback=?`, 
-                {cmd:"getModels", make: this.userMakeInput, year: this.userYearInput, sold_in_us: "1"},
-                    (data) => {
-                        const models = data.Models;
-                        const modelsArray = []
-                        for (var i = 0; i < models.length; i++) {
-                            modelsArray.push(models[i].model_name);
-                        }
-                        console.log(modelsArray);
-                        this.updateDropdowns(`select[name="models"]`, modelsArray);
-            });
-        });
-        // Listens for a model to be selected, once a change has been made for the car model dropdown
-        // then a request is sent for the trims data based on the model the user chose
-        document.querySelector(`select[name="models"]`).addEventListener('change', () => {
-            this.userModelInput = document.querySelector(`select[name="models"]`).value;
-
-            $.getJSON(this.base_url = `${link}?callback=?`, 
-                {cmd:"getTrims", model: this.userModelInput, make: this.userMakeInput,
-                    year: this.userYearInput, sold_in_us: "1"},(data) => {
-                        const trims = data.Trims;
-                        const trimsArray = []
-                        for (var i = 0; i < trims.length; i++) {
-                            trimsArray.push(trims[i].model_trim);
-                        }
-                        console.log(trimsArray);
-                        this.updateDropdowns(`select[name="trims"]`, trimsArray);
-            });
-        });
-    }
-    // place in variable list
-    selectNodeChild() {
-
-        // Rename function, comment throughout new code, targetValue is what tells program where to insert next dropdown data list
-        // access being denied when trying to access data second time (for makes). That is last problem, try again another day.
-
-        // Links to access car API data
-        let link = 'https://www.carqueryapi.com/api/0.3/';
-        // Pull data of years available            
-        $.getJSON(this.base_url = `${link}?callback=?`, {cmd:"getYears"},(data) => {
-            const years = data.Years;
-            const yearsArray = [];
-            // API only has min and max year, this counts out all years in between
-            for (var i = Number(years.min_year); i <= years.max_year; i++) {
-                yearsArray.push(i);            
-            }
-            this.updateDropdowns("years", yearsArray); 
-            console.log("first request complete"); 
-            console.log(yearsArray);
-        });
-        console.log("Did I wait for first request?");           
-
-
-        const section = document.querySelectorAll('section');
-        section.forEach(() => {addEventListener('change', (e) => {
-            // when console logged it logs it four times, but why?
-            // there is only one target. Is the code written wrong?
-            let targetValue = e.target.getAttribute("value");
-
-            this.userYearInput = document.querySelectorAll(`select[name="years"]`)[targetValue].value;
-
-            $.getJSON(this.base_url = `${link}?callback=?`, 
-                {cmd:"getMakes", year: this.userYearInput, sold_in_us: "1"},(data) => {
-                    const makes = data.Makes;
-                    const makesArray = []
-                    for (var i = 0; i < makes.length; i++) {
-                        makesArray.push(makes[i].make_display);
-                    }
-                    this.updateDropdowns(`select[name="makes${targetValue}"]`, makesArray);
-                    console.log("second request complete"); 
-                    console.log(makesArray);          
-            });
-            console.log("did I wait for second request?");           
-            
-            document.querySelector(`select[name="makes${targetValue}"]`).addEventListener('change', () => {
-                this.userMakeInput = document.querySelector(`select[name="makes${targetValue}"]`).value;
-
-                $.getJSON(this.base_url = `${link}?callback=?`, 
-                    {cmd:"getModels", make: this.userMakeInput, year: this.userYearInput, sold_in_us: "1"},
-                        (data) => {
-                            const models = data.Models;
-                            const modelsArray = []
-                            for (var i = 0; i < models.length; i++) {
-                                modelsArray.push(models[i].model_name);
-                            }
-                            this.updateDropdowns(`select[name="models${targetValue}"]`, modelsArray);
-                            console.log(modelsArray);
-                });
-            });
-
-            document.querySelector(`select[name="models${targetValue}"]`).addEventListener('change', () => {
-                this.userModelInput = document.querySelector(`select[name="models${targetValue}"]`).value;
-    
-                $.getJSON(this.base_url = `${link}?callback=?`, 
-                    {cmd:"getTrims", model: this.userModelInput, make: this.userMakeInput,
-                        year: this.userYearInput, sold_in_us: "1"},(data) => {
-                            const trims = data.Trims;
-                            const trimsArray = []
-                            for (var i = 0; i < trims.length; i++) {
-                                trimsArray.push(trims[i].model_trim);
-                            }
-                            this.updateDropdowns(`select[name="trims${targetValue}"]`, trimsArray);
-                            console.log(trimsArray);
-                });
-            });            
-        })});
-    }
-
     dataArraysFunction() {
-
-       
         let data = {
             Years: [1941, 1942, 1943, 1944, 1945, 1946, 1947, 1948, 1949, 1950, 1951, 1952, 1953,
                     1954, 1955, 1956, 1957, 1958, 1959, 1960, 1961, 1962, 1963, 1964, 1965, 1966, 1967, 1968, 
@@ -336,22 +190,24 @@ class Controller {
         
         // Pull data of years available            
         // $.getJSON(this.base_url = `${link}?callback=?`, {cmd:"getYears"},(data) => {
+        // YEARS START------------------------>           
         const years = data.Years;
         const yearsArray = [];
         for (var i = 0; i < years.length; i++) {
             yearsArray.push(years[i]); 
         }
         // Create list of elements from array and places in years dropdown
-        this.updateDropdowns("years", yearsArray);           
-
+        this.updateDropdowns("years", yearsArray); 
+        // YEARS END ------------------------->    
         // Event listener that starts the chain of other listeners. Once a dropdown 
         // is changed to a value it populates the next dropdown.
         let self = this;
         function dropdownListeners(e) {
-            // Find value of "value" attribute on the target element
+            // Find value of "value" attribute on the target element. This allows dropdown population
+            // to stay within respective car comparison section.
             let targetValue = e.target.getAttribute("value");
             this.userYearInput = document.querySelectorAll(`select[name="years"]`)[targetValue].value;
-
+            // MAKES START ----------------------->
             // Populates makes dropdown based on year found from target element
             // $.getJSON(this.base_url = `${link}?callback=?`, 
             const makes = data.Makes;
@@ -360,9 +216,13 @@ class Controller {
                 makesArray.push(makes[i]);
             }
             self.updateDropdowns(`select[name="makes${targetValue}"]`, makesArray);
-            console.log(makesArray);                     
-            // Event listener for makes dropdown
-            document.querySelector(`select[name="makes${targetValue}"]`).addEventListener('change', () => {
+            console.log(makesArray); 
+            // MAKES END -----------------------> 
+            // MODEL START --------------------->                   
+            // Event listener for makes dropdown. Function populateModels used instead of arrow function
+            // in order to call it at end of listener. This removes extra listeners that were placed on element 
+            // each time parent function dropdownListeners was called. 
+            document.querySelector(`select[name="makes${targetValue}"]`).addEventListener('change', function populateModels() {
                 self.userMakeInput = document.querySelector(`select[name="makes${targetValue}"]`).value;
                 // $.getJSON(this.base_url = `${link}?callback=?`, 
                 const models = data.Models;
@@ -373,9 +233,14 @@ class Controller {
                 // Populates model dropdown
                 self.updateDropdowns(`select[name="models${targetValue}"]`, modelsArray);
                 console.log(modelsArray);
+                document.querySelector(`select[name="makes${targetValue}"]`).removeEventListener('change', populateModels);
             });
-            // Listener for a model to be selected
-            document.querySelector(`select[name="models${targetValue}"]`).addEventListener('change', () => {
+            // MODEL END --------------------->
+            // TRIM START -------------------->
+            // Listener for a model to be selected. Function populateTrims used instead of arrow function
+            // in order to call it at end of listener. This removes extra listeners that were placed on element 
+            // each time parent function dropdownListeners was called. 
+            document.querySelector(`select[name="models${targetValue}"]`).addEventListener('change', function populateTrims() {
                 self.userModelInput = document.querySelector(`select[name="models${targetValue}"]`).value;
     
                 // $.getJSON(this.base_url = `${link}?callback=?`, 
@@ -387,7 +252,8 @@ class Controller {
                 // Populates trims dropdown
                 self.updateDropdowns(`select[name="trims${targetValue}"]`, trimsArray);
                 console.log(trimsArray);
-            });       
+                document.querySelector(`select[name="models${targetValue}"]`).removeEventListener('change', populateTrims);
+            });// TRIM END -------------------->     
         }; //)});
         // Listeners for each of the years dropdown elements. Calls the initial listener to begin the
         // event listener chain.
@@ -395,10 +261,97 @@ class Controller {
         document.querySelector(`select[value="1"]`).addEventListener('change', dropdownListeners.bind(event));
         document.querySelector(`select[value="2"]`).addEventListener('change', dropdownListeners.bind(event));
         document.querySelector(`select[value="3"]`).addEventListener('change', dropdownListeners.bind(event));
-
-        // BUGS: 1) if year has been chosen but changed to another value before choosing make, then request for
-        // make is sent twice.
     }
+
+    finalDraftDataPull() {
+        // Links to access car API data
+        let link = 'https://www.carqueryapi.com/api/0.3/';
+        // Pull data of years available 
+        // YEARS START------------------------>           
+        $.getJSON(this.base_url = `${link}?callback=?`, {cmd:"getYears"},(data) => {
+            const years = data.Years;
+            const yearsArray = [];
+            // API only has min and max year, this counts out all years in between
+            for (var i = Number(years.min_year); i <= years.max_year; i++) {
+                yearsArray.push(i);            
+            }
+            this.updateDropdowns("years", yearsArray); 
+            console.log(yearsArray);
+        });        
+        // YEARS END ------------------------->
+        // Event listener that starts the chain of other listeners. Once a dropdown 
+        // is changed to a value it populates the next dropdown.
+        const self = this;
+        function dropdownListeners(e) {
+            // Find value of "value" attribute on the target element. This allows dropdown population
+            // to stay within respective car comparison section.
+            let targetValue = e.target.getAttribute("value");
+            this.userYearInput = document.querySelectorAll(`select[name="years"]`)[targetValue].value;
+            // MAKES START ----------------------->
+            // Populates makes dropdown based on year found from target element
+            $.getJSON(this.base_url = `${link}?callback=?`, 
+                {cmd:"getMakes", year: this.userYearInput, sold_in_us: "1"},(data) => {
+                    const makes = data.Makes;
+                    const makesArray = []
+                    for (var i = 0; i < makes.length; i++) {
+                        makesArray.push(makes[i].make_display);
+                    }
+                    self.updateDropdowns(`select[name="makes${targetValue}"]`, makesArray)
+                    console.log(makesArray);          
+            });           
+            // MAKES END ----------------------->
+            // MODEL START --------------------->
+            // Event listener for makes dropdown. Function populateModels used instead of arrow function
+            // in order to call it at end of listener. This removes extra listeners that were placed on element 
+            // each time parent function dropdownListeners was called. 
+            document.querySelector(`select[name="makes${targetValue}"]`).addEventListener('change', function populateModels() {
+                self.userMakeInput = document.querySelector(`select[name="makes${targetValue}"]`).value;
+
+                $.getJSON(self.base_url = `${link}?callback=?`, 
+                    {cmd:"getModels", make: self.userMakeInput, year: self.userYearInput, sold_in_us: "1"},
+                        (data) => {
+                            const models = data.Models;
+                            const modelsArray = []
+                            for (var i = 0; i < models.length; i++) {
+                                modelsArray.push(models[i].model_name);
+                            }
+                            // Populates model dropdown
+                            self.updateDropdowns(`select[name="models${targetValue}"]`, modelsArray);
+                            console.log(modelsArray); 
+                });
+                document.querySelector(`select[name="makes${targetValue}"]`).removeEventListener('change', populateModels);
+            });
+            // MODEL END --------------------->
+            // TRIM START -------------------->
+            // Listener for a model to be selected. Function populateTrims used instead of arrow function
+            // in order to call it at end of listener. This removes extra listeners that were placed on element 
+            // each time parent function dropdownListeners was called. 
+            document.querySelector(`select[name="models${targetValue}"]`).addEventListener('change', function populateTrims() {
+                self.userModelInput = document.querySelector(`select[name="models${targetValue}"]`).value;
+    
+                $.getJSON(self.base_url = `${link}?callback=?`, 
+                    {cmd:"getTrims", model: self.userModelInput, make: self.userMakeInput,
+                        year: self.userYearInput, sold_in_us: "1"},(data) => {
+                            const trims = data.Trims;
+                            const trimsArray = []
+                            for (var i = 0; i < trims.length; i++) {
+                                trimsArray.push(trims[i].model_trim);
+                            }
+                            // Populates trims dropdown
+                            self.updateDropdowns(`select[name="trims${targetValue}"]`, trimsArray);
+                            console.log(trimsArray);
+                });
+                document.querySelector(`select[name="models${targetValue}"]`).removeEventListener('change', populateTrims);
+            }); // TRIM END -------------------->           
+        };
+        // Listeners for each of the years dropdown elements. Calls the initial listener to begin the
+        // event listener chain.
+        document.querySelector(`select[value="0"]`).addEventListener('change', dropdownListeners.bind(event));
+        document.querySelector(`select[value="1"]`).addEventListener('change', dropdownListeners.bind(event));
+        document.querySelector(`select[value="2"]`).addEventListener('change', dropdownListeners.bind(event));
+        document.querySelector(`select[value="3"]`).addEventListener('change', dropdownListeners.bind(event));
+    }
+
 }
 
 function startup() {
