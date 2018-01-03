@@ -86,6 +86,9 @@ class View {
 
     // For Car API-------------------------->
     // Changes arrays into simple list of html options for API
+    // WARNING: if the array is reversed for years to be listed recent first, then
+    // .selectedIndex value of trim options will be wrong. The index value is used 
+    // to select corresponding object within Trim array from car API. 
     arrayToListApi(array) {
         let valuesArray = array.map(component => `<option>${component}</option>`);        
         return `<option selected="selected" disabled="disabled">Please Select</option>
@@ -124,9 +127,11 @@ class Controller {
         this.userYearInput;
         this.userMakeInput;
         this.userModelInput;
+        this.userTrimInput;
         // this.dataArrays();
-        this.dataArraysFunction();
-        // this.finalDraftDataPull();
+        // this.dataArraysFunction();
+        this.finalDraftDataPull();
+        
     }
     // Event handler when user clicks done button after filling out make/model fields
     doneButton() {
@@ -252,7 +257,9 @@ class Controller {
                 // Populates trims dropdown
                 self.updateDropdowns(`select[name="trims${targetValue}"]`, trimsArray);
                 console.log(trimsArray);
+                // console.log(document.querySelector(`select[name="models${targetValue}"]`).selectedIndex); Used just to test .selectedIndex
                 document.querySelector(`select[name="models${targetValue}"]`).removeEventListener('change', populateTrims);
+                
             });// TRIM END -------------------->     
         }; //)});
         // Listeners for each of the years dropdown elements. Calls the initial listener to begin the
@@ -285,6 +292,7 @@ class Controller {
         function dropdownListeners(e) {
             // Find value of "value" attribute on the target element. This allows dropdown population
             // to stay within respective car comparison section.
+            let trims; // list this and next variable at top of constructor
             let targetValue = e.target.getAttribute("value");
             this.userYearInput = document.querySelectorAll(`select[name="years"]`)[targetValue].value;
             // MAKES START ----------------------->
@@ -332,7 +340,7 @@ class Controller {
                 $.getJSON(self.base_url = `${link}?callback=?`, 
                     {cmd:"getTrims", model: self.userModelInput, make: self.userMakeInput,
                         year: self.userYearInput, sold_in_us: "1"},(data) => {
-                            const trims = data.Trims;
+                            trims = data.Trims;
                             const trimsArray = []
                             for (var i = 0; i < trims.length; i++) {
                                 trimsArray.push(trims[i].model_trim);
@@ -342,7 +350,20 @@ class Controller {
                             console.log(trimsArray);
                 });
                 document.querySelector(`select[name="models${targetValue}"]`).removeEventListener('change', populateTrims);
-            }); // TRIM END -------------------->           
+            }); // TRIM END -------------------->
+            // Listener for trim dropdown to change, then finds index of listed option elements in dropdown. 1 is subtracted
+            // into the index value to compensate for false first option of "please select". The resulting value is used to 
+            // select the correct specific model object within the Trim array. 
+            document.querySelector(`select[name="trims${targetValue}"]`).addEventListener('change', function populateSpecs() {
+                // trims = data.Trims (from previous event listener)
+                let optionIndex = trims[document.querySelector(`select[name="trims${targetValue}"]`).selectedIndex - 1];
+                // Fills out list of car specs
+                document.querySelector(`span[name="drive${targetValue}"]`).textContent = `${optionIndex.model_drive}`; 
+                document.querySelector(`span[name="engine_type${targetValue}"]`).textContent = `${optionIndex.model_engine_type}`; 
+                document.querySelector(`span[name="fuel_type${targetValue}"]`).textContent = `${optionIndex.model_engine_fuel}`; 
+
+                document.querySelector(`select[name="trims${targetValue}"]`).removeEventListener('change', populateSpecs);               
+            }); 
         };
         // Listeners for each of the years dropdown elements. Calls the initial listener to begin the
         // event listener chain.
@@ -351,7 +372,6 @@ class Controller {
         document.querySelector(`select[value="2"]`).addEventListener('change', dropdownListeners.bind(event));
         document.querySelector(`select[value="3"]`).addEventListener('change', dropdownListeners.bind(event));
     }
-
 }
 
 function startup() {
@@ -361,8 +381,7 @@ function startup() {
 window.onload = startup;
 
 // GAMEPLAN
-    // 1) Use event delegation in order to use functions for target section (use form.querySelector?).
-    // 2) Input specs of chosen trim
-    // 3) Use arrow functions to add eventlisteners to each section
-
-    // Makes page: https://www.autoevolution.com/cars/
+    // 1) Finish spec output and make alphabetical
+    // 2) Clean up useless code
+    // 3) Change car name at section top to user selection
+    // 4) Display all and hide buttons for sections
