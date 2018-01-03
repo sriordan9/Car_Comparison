@@ -16,7 +16,7 @@ ol {
 	list-style: decimal;
 }
 ul {
-	padding-left: 1.4em
+	padding-left: 1.4em;
 	list-style: square;
 }
 table {
@@ -79,8 +79,9 @@ div > * {
 	width: 50%;
 	
 }
-div input {
-	float: left;
+/* was for pushing input (user types in specs) fields to left */
+div span {
+	float: right;
 }
 
 /* Experimental new structure for Car API (second comparison section)*/
@@ -93,16 +94,23 @@ select {
 	display: flex;
 	justify-content: space-evenly;
 }
-.blah{
+.placement {
 	display: block;
 	margin: auto;
 	margin-bottom: 5px;
 	width: 50px;
 }
-fieldset{
+fieldset {
 	margin-top: 5px;
 	padding-top: 10px;
+	border-top: 2px solid black;
+}
+fieldset div {
+	padding-top: 7px;
 	border-top: 1px solid black;
+}
+fieldset div:first-child {
+	border-top: none;
 }
 
 
