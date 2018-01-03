@@ -130,7 +130,7 @@ class Controller {
         this.userTrimInput;
         // this.dataArrays();
         // this.dataArraysFunction();
-        this.finalDraftDataPull();
+        // this.finalDraftDataPull();
         
     }
     // Event handler when user clicks done button after filling out make/model fields
@@ -362,10 +362,21 @@ class Controller {
                 // trims = data.Trims (from previous event listener)
                 let optionIndex = trims[document.querySelector(`select[name="trims${targetValue}"]`).selectedIndex - 1];
                 // Fills out list of car specs
-                document.querySelector(`span[name="drive${targetValue}"]`).textContent = `${optionIndex.model_drive}`; 
                 document.querySelector(`span[name="engine_type${targetValue}"]`).textContent = `${optionIndex.model_engine_type}`; 
-                document.querySelector(`span[name="fuel_type${targetValue}"]`).textContent = `${optionIndex.model_engine_fuel}`; 
-
+                document.querySelector(`span[name="cylinders${targetValue}"]`).textContent = `${optionIndex.model_engine_cyl}`; 
+                document.querySelector(`span[name="engine_size${targetValue}"]`).textContent = `${optionIndex.model_engine_l}`; 
+                
+                document.querySelector(`span[name="power${targetValue}"]`).textContent = `${optionIndex.model_engine_power_hp}`; 
+                document.querySelector(`span[name="torque${targetValue}"]`).textContent = `${optionIndex.model_engine_torque_lbft}`; 
+                document.querySelector(`span[name="drive${targetValue}"]`).textContent = `${optionIndex.model_drive}`; 
+                
+                document.querySelector(`span[name="top_speed${targetValue}"]`).textContent = `${optionIndex.model_top_speed_mph}`; 
+                document.querySelector(`span[name="weight${targetValue}"]`).textContent = `${optionIndex.model_weight_lbs}`; 
+                document.querySelector(`span[name="mpg_hwy${targetValue}"]`).textContent = `${optionIndex.model_mpg_hwy}`; 
+                
+                document.querySelector(`span[name="mpg_city${targetValue}"]`).textContent = `${optionIndex.model_mpg_city}`; 
+                document.querySelector(`span[name="mpg_combined${targetValue}"]`).textContent = `${optionIndex.model_mpg_mixed}`; 
+                // Removes any additional listeners that were created
                 document.querySelector(`select[name="trims${targetValue}"]`).removeEventListener('change', populateSpecs);               
             }); 
         };
