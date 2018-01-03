@@ -288,13 +288,14 @@ class Controller {
         // YEARS END ------------------------->
         // Event listener that starts the chain of other listeners. Once a dropdown 
         // is changed to a value it populates the next dropdown.
-        const self = this;
+        var self = this;
         function dropdownListeners(e) {
             // Find value of "value" attribute on the target element. This allows dropdown population
             // to stay within respective car comparison section.
             let trims; // list this and next variable at top of constructor
             let targetValue = e.target.getAttribute("value");
-            this.userYearInput = document.querySelectorAll(`select[name="years"]`)[targetValue].value;
+            self.userYearInput = document.querySelectorAll(`select[name="years"]`)[targetValue].value;
+            console.log(self.userYearInput);
             // MAKES START ----------------------->
             // Populates makes dropdown based on year found from target element
             $.getJSON(this.base_url = `${link}?callback=?`, 
@@ -314,6 +315,9 @@ class Controller {
             // each time parent function dropdownListeners was called. 
             document.querySelector(`select[name="makes${targetValue}"]`).addEventListener('change', function populateModels() {
                 self.userMakeInput = document.querySelector(`select[name="makes${targetValue}"]`).value;
+                console.log(self.userMakeInput);
+                console.log(self.userYearInput);
+                
 
                 $.getJSON(self.base_url = `${link}?callback=?`, 
                     {cmd:"getModels", make: self.userMakeInput, year: self.userYearInput, sold_in_us: "1"},
