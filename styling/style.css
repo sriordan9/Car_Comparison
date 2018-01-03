@@ -25,32 +25,62 @@ table {
 } 
 /* end reset browser styles */
 
-/* Main Start----------------------- */
+/* General Page Start--------------- */
 body {
 	font-family: Arial, Helvetica, sans-serif;
 }
-main {
-    display: flex;
-	flex-wrap: wrap;
-	justify-content: space-evenly;
+html {
+	background: url("images/whtShelby.jpg"); /*	https://unsplash.com/photos/0GyzS1Hjjko */
+	background-attachment: fixed;
+	background-position: center center;
+	background-repeat: no-repeat;
 }
-section{
-	border: 1px solid black;
-	border-radius: 5px;
-	box-shadow: 5px 5px 7px black;
-	margin-top: 25px;
-	width: 280px;
+/* General Page End----------------- */
+
+/* Main Start----------------------- */
+button:first-child {
+	float: right;
+	width: 25px;
+}
+div span {
+	float: right;
+}
+div > * {
+	display: inline-block;
+	height: 1.5rem;
+	width: 50%;	
+}
+fieldset {
+	border: 0;
+	border-top: 2px solid black;
+    display: flex;
+	flex-direction: column;
+	padding: 3px;
+}
+fieldset div {
+	border-top: 1px solid black;
+	padding-top: 5px;
+}
+fieldset div:first-child {
+	border-top: none;
+}
+.flex {
+	display: flex;
+	justify-content: space-evenly;
+	margin-bottom: 5px;
+}
+h1 {
+	color: rgb(18, 46, 124);
+	margin: 25px auto 55px;
+	text-align: center;
+	text-shadow: 3px 3px 4px rgb(121, 121, 121);
 }
 h2 {
-	background: #4682b4;
+	background: linear-gradient(rgb(18, 46, 124), 75%, rgba(131, 131, 131, 0.5));
 	color: whitesmoke;
 	height: 2rem;
 	padding: 2px 0 0 80px;
-	text-shadow: 5px 5px 7px black;
-}
-button:first-child {
-	width: 25px;
-	float: right;
+	text-shadow: 7px 7px 7px black;
 }
 i {
 	margin-bottom: 6px;
@@ -58,60 +88,31 @@ i {
 input {
 	border-radius: 5px;
 }
-input[placeholder="URL"] {
-	display: block;
-	height: 1.5rem;
-	margin: 3px auto;
-	margin-bottom: 20px;
-	text-align: center;
-	width: 75%
-}
-fieldset {
-	border: 0;
+main {
     display: flex;
-	flex-direction: column;
-	padding: 3px;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
 }
-div > * {
-	display: inline-block;
-	height: 1.5rem;
-	margin-bottom: 5px;
-	width: 50%;
-	
+@media only screen and (min-width: 1550px) {
+    main {
+		max-width: 1550px;
+		margin: auto
+    }
 }
-/* was for pushing input (user types in specs) fields to left */
-div span {
-	float: right;
+section {
+	border: 1px solid black;
+	border-radius: 5px;
+	box-shadow: 5px 5px 7px black;
+	margin: 10px;
+	margin-top: 25px;
+	width: 280px;
 }
-
-/* Experimental new structure for Car API (second comparison section)*/
+section > form {
+	background-color: rgba(131, 131, 131, 0.5); /*rgb(255, 255, 255, .1);*/
+	color: white;
+}
 select {
 	display: flex;
 	width: 45%;
-	
 }
-.flex {
-	display: flex;
-	justify-content: space-evenly;
-}
-.placement {
-	display: block;
-	margin: auto;
-	margin-bottom: 5px;
-	width: 50px;
-}
-fieldset {
-	margin-top: 5px;
-	padding-top: 10px;
-	border-top: 2px solid black;
-}
-fieldset div {
-	padding-top: 7px;
-	border-top: 1px solid black;
-}
-fieldset div:first-child {
-	border-top: none;
-}
-
-
 /* End Main----------------------- */
