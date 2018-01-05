@@ -387,7 +387,7 @@ class Controller {
             // MAKES START ----------------------->
             // Populates makes dropdown based on year found from target element
             $.getJSON(this.base_url = `${link}?callback=?`, 
-                {cmd:"getMakes", year: this.userYearInput, sold_in_us: "1"},(data) => {
+                {cmd:"getMakes", year: self.userYearInput, sold_in_us: "1"},(data) => {
                     const makes = data.Makes;
                     const makesArray = []
                     for (var i = 0; i < makes.length; i++) {
@@ -503,4 +503,5 @@ window.onload = startup;
     // 4.5) if first trim is just "" then display "none" for it
     // 5) If no trim available, then continue with spec output (Shelby Mustang problem)
     // 6) Removal of event listener prevents it from reloading for another choice if
-    //  user changes any dropdowns besides year (which adds all listeners again)
+    //  user changes any dropdowns besides year (which adds all listeners again). Place
+    // removals after chain start, but before individual sub listeners
