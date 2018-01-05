@@ -15,7 +15,67 @@ class Model {
         this.userInputModels;
         this.getYears;
     }
-
+    // Checks if specification data exists and whether it is a string or should be a number
+    valueExist(spec) {
+        if(spec === undefined || spec === null || spec === 'undefined' || spec === 'null') { // At on point null and undefined were pulled as strings
+            return 'Unavailable';                                                            // then not as strings, so versions are covered here
+        } if(Number(spec) != spec) {//check if data is text
+            return spec;
+        } else { // check if data should really be a number
+            return Number(spec);
+        }
+    } 
+    // Converts engine size from cc to liters
+    ccToLiters (spec) {
+        if (Number(spec) === this.valueExist(spec)) {// if valueExists returns a number then convert
+            let convertedSpec = spec / 1000;
+            return convertedSpec.toFixed(1);
+        } else { // if function is used on anything besides actual number, then valueExists will return correct info 
+            return this.valueExist(spec);
+        }
+    }
+    // Converts metric horsepower to imperial horsepower
+    psToHp (spec) {
+        if (Number(spec) === this.valueExist(spec)) {// if valueExists returns a number then convert
+            return Math.round(spec / 1.01387);
+        } else { // if function is used on anything besides actual number, then valueExists will return correct info 
+            return this.valueExist(spec);
+        }
+    }
+    // Converts Newton-meters to lb-ft (torque)
+    nmToLbFt (spec) {
+        if (Number(spec) === this.valueExist(spec)) {// if valueExists returns a number then convert
+            return Math.round(spec / 1.3558179483314);
+        } else { // if function is used on anything besides actual number, then valueExists will return correct info 
+            return this.valueExist(spec);
+        }
+    }
+    // Converts from kilometers/hour to miles/hour
+    kphToMph (spec) {
+        if (Number(spec) === this.valueExist(spec)) {// if valueExists returns a number then convert
+            return Math.round(spec / 1.60934);
+        } else { // if function is used on anything besides actual number, then valueExists will return correct info 
+            return this.valueExist(spec);
+        }
+    }
+    // Converts kilograms to pounds
+    kgToLb (spec) {
+        if (Number(spec) === this.valueExist(spec)) {// if valueExists returns a number then convert
+            let convertedSpec = spec / 0.453592;
+            return convertedSpec.toFixed(1);
+        } else { // if function is used on anything besides actual number, then valueExists will return correct info 
+            return this.valueExist(spec);
+        }
+    }
+    // Converts liters/100kilometers to miles/gal
+    lkmToMpg (spec) {
+        if (Number(spec) === this.valueExist(spec)) {// if valueExists returns a number then convert
+            let convertedSpec = 235.2145833 / spec;
+            return convertedSpec.toFixed(1);
+        } else { // if function is used on anything besides actual number, then valueExists will return correct info 
+            return this.valueExist(spec);
+        }
+    }
     // Might not need this later, may be able to
     capitalize(string) {
         return `${string.charAt(0).toUpperCase()}${string.slice(1).toLowerCase()}`;
@@ -130,7 +190,8 @@ class Controller {
         this.userTrimInput;
         // this.dataArrays();
         // this.dataArraysFunction();
-        // this.finalDraftDataPull();
+        this.finalDraftDataPull();
+        // this.confirmSpecPull();
         
     }
     // Event handler when user clicks done button after filling out make/model fields
@@ -290,6 +351,33 @@ class Controller {
         // is changed to a value it populates the next dropdown.
         var self = this;
         function dropdownListeners(e) {
+            // Can populateSpecs be placed elsewhere with other functions? Also, take comments from functions previous location
+            function populateSpecs() {
+                if(trims[1] === undefined) {
+                    var optionIndex = trims[0];
+                } else {
+                    // trims = data.Trims (from previous event listener)
+                    var optionIndex = trims[document.querySelector(`select[name="trims${targetValue}"]`).selectedIndex - 1];
+                }
+                // Fills out list of car specs. 1st checks if there is a value to pull, then if value is string or number and 
+                // acts accordingly (functions 'valueExist' and conversion functions do this). 
+                document.querySelector(`span[name="engine_type${targetValue}"]`).textContent = `${self.projectModel.valueExist(optionIndex.model_engine_type)}`;
+                document.querySelector(`span[name="cylinders${targetValue}"]`).textContent = `${self.projectModel.valueExist(optionIndex.model_engine_cyl)}`;
+                document.querySelector(`span[name="engine_size${targetValue}"]`).textContent = `${self.projectModel.ccToLiters(optionIndex.model_engine_cc)} (L)`; 
+                
+                document.querySelector(`span[name="power${targetValue}"]`).textContent = `${self.projectModel.psToHp(optionIndex.model_engine_power_ps)} (hp)`; 
+                document.querySelector(`span[name="torque${targetValue}"]`).textContent = `${self.projectModel.nmToLbFt(optionIndex.model_engine_torque_nm)} (lb-ft)`; 
+                document.querySelector(`span[name="drive${targetValue}"]`).textContent = `${self.projectModel.valueExist(optionIndex.model_drive)}`;
+                
+                document.querySelector(`span[name="top_speed${targetValue}"]`).textContent = `${self.projectModel.kphToMph(optionIndex.model_top_speed_kph)} (mph)`; 
+                document.querySelector(`span[name="weight${targetValue}"]`).textContent = `${self.projectModel.kgToLb(optionIndex.model_weight_kg)} (lbs)`; 
+                document.querySelector(`span[name="mpg_hwy${targetValue}"]`).textContent = `${self.projectModel.lkmToMpg(optionIndex.model_lkm_hwy)}`; 
+                
+                document.querySelector(`span[name="mpg_city${targetValue}"]`).textContent = `${self.projectModel.lkmToMpg(optionIndex.model_lkm_city)}`; 
+                document.querySelector(`span[name="mpg_combined${targetValue}"]`).textContent = `${self.projectModel.lkmToMpg(optionIndex.model_lkm_mixed)}`; 
+                // Removes any additional listeners that were created
+                document.querySelector(`select[name="trims${targetValue}"]`).removeEventListener('change', populateSpecs); 
+            }
             // Find value of "value" attribute on the target element. This allows dropdown population
             // to stay within respective car comparison section.
             let trims; // list this and next variable at top of constructor
@@ -352,33 +440,17 @@ class Controller {
                             // Populates trims dropdown
                             self.updateDropdowns(`select[name="trims${targetValue}"]`, trimsArray);
                             console.log(trimsArray);
+
+                            if(trims[1] === undefined) {
+                                populateSpecs();
+                            } return;
                 });
                 document.querySelector(`select[name="models${targetValue}"]`).removeEventListener('change', populateTrims);
             }); // TRIM END -------------------->
             // Listener for trim dropdown to change, then finds index of listed option elements in dropdown. 1 is subtracted
             // into the index value to compensate for false first option of "please select". The resulting value is used to 
             // select the correct specific model object within the Trim array. 
-            document.querySelector(`select[name="trims${targetValue}"]`).addEventListener('change', function populateSpecs() {
-                // trims = data.Trims (from previous event listener)
-                let optionIndex = trims[document.querySelector(`select[name="trims${targetValue}"]`).selectedIndex - 1];
-                // Fills out list of car specs
-                document.querySelector(`span[name="engine_type${targetValue}"]`).textContent = `${optionIndex.model_engine_type}`; 
-                document.querySelector(`span[name="cylinders${targetValue}"]`).textContent = `${optionIndex.model_engine_cyl}`; 
-                document.querySelector(`span[name="engine_size${targetValue}"]`).textContent = `${optionIndex.model_engine_l}`; 
-                
-                document.querySelector(`span[name="power${targetValue}"]`).textContent = `${optionIndex.model_engine_power_hp}`; 
-                document.querySelector(`span[name="torque${targetValue}"]`).textContent = `${optionIndex.model_engine_torque_lbft}`; 
-                document.querySelector(`span[name="drive${targetValue}"]`).textContent = `${optionIndex.model_drive}`; 
-                
-                document.querySelector(`span[name="top_speed${targetValue}"]`).textContent = `${optionIndex.model_top_speed_mph}`; 
-                document.querySelector(`span[name="weight${targetValue}"]`).textContent = `${optionIndex.model_weight_lbs}`; 
-                document.querySelector(`span[name="mpg_hwy${targetValue}"]`).textContent = `${optionIndex.model_mpg_hwy}`; 
-                
-                document.querySelector(`span[name="mpg_city${targetValue}"]`).textContent = `${optionIndex.model_mpg_city}`; 
-                document.querySelector(`span[name="mpg_combined${targetValue}"]`).textContent = `${optionIndex.model_mpg_mixed}`; 
-                // Removes any additional listeners that were created
-                document.querySelector(`select[name="trims${targetValue}"]`).removeEventListener('change', populateSpecs);               
-            }); 
+            document.querySelector(`select[name="trims${targetValue}"]`).addEventListener('change', populateSpecs); 
         };
         // Listeners for each of the years dropdown elements. Calls the initial listener to begin the
         // event listener chain.
@@ -387,6 +459,35 @@ class Controller {
         document.querySelector(`select[value="2"]`).addEventListener('change', dropdownListeners.bind(event));
         document.querySelector(`select[value="3"]`).addEventListener('change', dropdownListeners.bind(event));
     }
+    // // USE FOR TESTING SPEC PULLING
+    confirmSpecPull() {
+        document.querySelector('select[name="trims0"]').addEventListener('click', function populateSpecs() {
+            // self.userModelInput = document.querySelector(`select[name="models${targetValue}"]`).value;
+
+            $.getJSON(this.base_url = 'https://www.carqueryapi.com/api/0.3/?callback=?&cmd=getTrims&model=shelby+gt+500&make=ford&year=2010&sold_in_us=1',
+            (data) => {
+                const trims = data.Trims;
+                const trimsArray = [];
+                for (var i = 0; i < trims.length; i++) {
+                    trimsArray.push(trims[i]);
+                }
+                // Populates trims dropdown
+                // self.updateDropdowns(`select[name="trims${targetValue}"]`, trimsArray);
+                console.log(trimsArray);
+
+                // if(trims[0].model_trim === '') {
+                //     console.log('only one model');
+                // }
+                if(trims[1] === undefined) {
+                    console.log('only one model');
+                }
+                console.log(trims[1]);
+                // console.log(document.querySelector(`select[name="models${targetValue}"]`).selectedIndex); Used just to test .selectedIndex
+                // document.querySelector(`select[name="models${targetValue}"]`).removeEventListener('change', populateTrims);
+            }
+        )});
+    }
+
 }
 
 function startup() {
@@ -396,7 +497,10 @@ function startup() {
 window.onload = startup;
 
 // GAMEPLAN
-    // 1) Finish spec output and make alphabetical
     // 2) Clean up useless code
     // 3) Change car name at section top to user selection
     // 4) Display all and hide buttons for sections
+    // 4.5) if first trim is just "" then display "none" for it
+    // 5) If no trim available, then continue with spec output (Shelby Mustang problem)
+    // 6) Removal of event listener prevents it from reloading for another choice if
+    //  user changes any dropdowns besides year (which adds all listeners again)
