@@ -60,7 +60,56 @@ class Model {
 
 class View {
     constructor() {
+        this.showXButton();
+        this.removeXButton();
+        this.removeSpec();
+    }    
+    showXButton() {
+        document.querySelector('main').addEventListener('mouseover',(e) => {
+            // ***** change to non var varibles?
+            var divName = e.srcElement.getAttribute('name')         // ---> Store attribute values (if any) in variables. One from possible
+            var parentName = e.srcElement.parentNode.getAttribute('name');   // correct div, another from possible child of correct div
+            
+            if (parentName) {                          // ---> If parent attribute value exists, see if it includes 'spec'
+                if(parentName.includes('spec')) {                   
+                    e.srcElement.parentNode.lastElementChild.classList.remove('hide');
+                } return;               
+            } 
+            if(divName) {                             // ---> If attribute value exists on div, see if it includes 'spec'
+                if(divName.includes('spec')){                       
+                    e.srcElement.lastElementChild.classList.remove('hide');
+                } return;
+            }
+        }); 
+    };    
+    removeXButton() {
+        document.querySelector('main').addEventListener('mouseout',(e) => {
 
+            var divName = e.srcElement.getAttribute('name')         // ---> Store attribute values in (if any) variables. One from possible
+            var parentName = e.srcElement.parentNode.getAttribute('name');    // correct div, another from possible child of correct div
+            
+            if (parentName) {                           // ---> If parent attribute value exists, see if it includes 'spec'                                       
+                if(parentName.includes('spec')) {                   
+                    e.srcElement.parentNode.lastElementChild.classList.add('hide');
+                } return;               
+            } 
+            if(divName) {                             // ---> If attribute value exists on div, see if it includes 'spec'               
+                if(divName.includes('spec')){                       
+                    e.srcElement.lastElementChild.classList.add('hide');
+                } return;
+            }    
+        }); 
+    }
+    removeSpec() {
+        document.querySelector('main').addEventListener('click', (e) => {
+            if(e.srcElement.textContent === 'x') {                              // ---> If the element clicked is the 'X' button, get
+                var attribName = e.srcElement.parentNode.getAttribute('name');  // parentNode name attribute & create array of that div from 
+                var nameArray = document.getElementsByName(attribName);         // all sections
+
+                for(var i = 0; i < nameArray.length; i++)                       // ---> For each section, hide that particular div
+                    nameArray[i].classList.add('hide');
+            } return;
+        });
     }
     arrayToListApi(array) {                                                 // ---> Changes arrays into simple list of html options for API
         let valuesArray = array.map(component => `<option>${component}</option>`);  // ---> WARNING: if array is reversed to list recent yrs  
@@ -255,11 +304,12 @@ function startup() {
 window.onload = startup;
 
 // GAMEPLAN
-    // 2) Clean up useless code
-    // 3) Change car name at section top to user selection
-    // 4) Display all and hide buttons for sections
-    // 4.5) if first trim is just "" then display "none" for it
-    // 5) If no trim available, then continue with spec output (Shelby Mustang problem)
-    // 6) Removal of event listener prevents it from reloading for another choice if
+    // 1) Change car name at section top to user selection
+    // 2) Display all and hide buttons for sections
+    // 3) if first trim is just "" then display "none" for it
+    // 4) Removal of event listener prevents it from reloading for another choice if
     //  user changes any dropdowns besides year (which adds all listeners again). Place
-    // removals after chain start, but before individual sub listeners
+    //  removals after chain start, but before individual sub listeners
+    // 5) should the showXButton, removeXButton, removeSpec functions be in the View or
+    //  class?
+   
