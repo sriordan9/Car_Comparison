@@ -42,13 +42,31 @@ button:first-child {
 	float: right;
 	width: 25px;
 }
-div span {
-	float: right;
-}
-div > * {
+div > p {
 	display: inline-block;
-	height: 1.5rem;
 	width: 50%;	
+}
+div > span:first-of-type {
+	display: inline;
+    position: absolute;
+}
+div > span:nth-of-type(2) {
+	background-color: rgb(18, 46, 124);
+	border-radius: 25px;
+	color: white; 
+	float: right;
+	font-weight: lighter;
+	margin-top: -2px;
+	position: relative; 
+	text-align: center; 
+	width: 1.5rem;
+	z-index: 1;
+}
+div > span:nth-of-type(2):active {
+	border: 1px solid white;
+}
+div > span:nth-of-type(2):hover {
+	cursor: pointer;
 }
 fieldset {
 	border: 0;
@@ -64,7 +82,7 @@ fieldset div {
 fieldset div:first-child {
 	border-top: none;
 }
-.flex {
+form > div {
 	display: flex;
 	justify-content: space-evenly;
 	margin-bottom: 5px;
@@ -81,6 +99,9 @@ h2 {
 	height: 2rem;
 	padding: 2px 0 0 80px;
 	text-shadow: 7px 7px 7px black;
+}
+.hide {
+	display: none;
 }
 i {
 	margin-bottom: 6px;
@@ -114,5 +135,8 @@ section > form {
 select {
 	display: flex;
 	width: 45%;
+}
+.show {
+	display: inline-block;
 }
 /* End Main----------------------- */
