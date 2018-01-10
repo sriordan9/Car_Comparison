@@ -77,6 +77,7 @@ class populateData {
         this.getTrims;
         this.specsData;
         this.getSpecs;
+        this.updateSectionHeader;
         this.dropdownListeners();
     }    
     getYears() {                                   // ---> Place years in all for year dropdowns
@@ -188,6 +189,10 @@ class populateData {
         document.querySelector(`span[name="mpg_combined${targetValue}"]`).textContent = 
         `${this.projectConversions.lkmToMpg(optionIndex.model_lkm_mixed)}`;
     }
+    updateSectionHeader(e) {
+        let chosenModel = e.target.value;
+        e.target.parentNode.parentNode.previousElementSibling.textContent = chosenModel;
+    }
     dropdownListeners() {       // ---> Event listener on <main> of index.html for dropdown changes & sorts for specific dropdown.
         
         document.querySelector('main').addEventListener('change', (e) => {
@@ -199,6 +204,7 @@ class populateData {
                 this.getModels(e);
 
             } else if(e.target.getAttribute('name').includes('models')){
+                this.updateSectionHeader(e);
                 this.getTrims(e);
 
             } else {
@@ -215,13 +221,12 @@ function startup() {
 window.onload = startup;
 
 // GAMEPLAN
-    // 3) Change car name at section top to user selection
-    // 4) Display all and hide buttons for sections
-    // 5) if first trim is just "" then display "none" for it
-    // 6) If no trim available, then continue with spec output (Shelby Mustang problem),
+    // 1) Display all and hide buttons for sections
+    // 2) if first trim is just "" then display "none" for it
+    // 3) If no trim available, then continue with spec output (Shelby Mustang problem),
     //   same prob for model (land rover) if no model then skip to specs
-    // 7) convert to ES5 when done
-    // 8) make let, const, and var uniform throughout
-    // 9) may not need all the value attributes on index.html besides for trims
-    // 10) if user changes all dropdowns then changes year, only makes clears to "please select"
+    // 4) convert to ES5 when done
+    // 5) make let, const, and var uniform throughout
+    // 6) may not need all the value attributes on index.html besides for trims
+    // 7) if user changes all dropdowns then changes year, only makes clears to "please select"
     //   need to clear others too 
