@@ -16,7 +16,7 @@ ol {
 	list-style: decimal;
 }
 ul {
-	padding-left: 1.4em
+	padding-left: 1.4em;
 	list-style: square;
 }
 table {
@@ -25,85 +25,151 @@ table {
 } 
 /* end reset browser styles */
 
-/* Main Start----------------------- */
+/* General Page Start--------------- */
 body {
 	font-family: Arial, Helvetica, sans-serif;
+}
+html {
+	background: url("images/whtShelby.jpg"); /*	https://unsplash.com/photos/0GyzS1Hjjko */
+	background-attachment: fixed;
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+/* General Page End----------------- */
+
+/* Main Start----------------------- */
+button:hover {
+	cursor: pointer;
+}
+/* Displays hint when hovering over undo buttons */
+button:hover + .undoBtnHint {
+	display: inline-block;
+}
+/* Spec name */
+div > p {
+	display: inline-block;
+	width: 50%;	
+}
+/* Hidden 'X' button for spec lines */
+div > button {
+	background-color: rgb(18, 46, 124);
+	border-radius: 5px;
+	color: whitesmoke; 
+	float: right;
+	font-weight: lighter;
+	position: relative; 
+	text-align: center; 
+	width: 1.5rem;
+	z-index: 1;
+}
+/* Hidden 'X' button for spec lines */
+div > button:active {
+	border: 2px solid white;
+}
+fieldset {
+	border: 0;
+	border-top: 2px solid black;
+    display: flex;
+	flex-direction: column;
+	padding: 3px;
+}
+/* All fieldset children that are divs */
+fieldset div {
+	border-top: 1px solid black;
+	padding-top: 5px;
+}
+fieldset div:first-child {
+	border-top: none;
+}
+/* Direct div children of the form */
+form > div {
+	display: flex;
+	justify-content: space-evenly;
+	margin-bottom: 5px;
+}
+/* Direct div children of header */
+header > div {
+	text-align: center;
+	padding-bottom: 55px;
+}
+h1 {
+	color: rgb(18, 46, 124);
+	margin: 25px auto 5px;
+	text-shadow: 2px 2px 3px rgb(223, 223, 223);
+}
+h2 {
+	background: linear-gradient(rgb(18, 46, 124), 75%, rgba(131, 131, 131, 0.5));
+	color: whitesmoke;
+	height: 2rem;
+	padding-left: 11px;
+	text-shadow: 7px 7px 7px black;
+}
+.hide {
+	display: none;
 }
 main {
     display: flex;
 	flex-wrap: wrap;
 	justify-content: space-evenly;
 }
-section{
+/* Prevent too large of a distance between sections if very wide screen */
+@media only screen and (min-width: 1550px) {
+    main {
+		max-width: 1550px;
+		margin: auto
+    }
+}
+section {
 	border: 1px solid black;
 	border-radius: 5px;
 	box-shadow: 5px 5px 7px black;
+	margin: 10px;
 	margin-top: 25px;
 	width: 280px;
 }
-h2 {
-	background: #4682b4;
-	color: whitesmoke;
-	height: 2rem;
-	padding: 2px 0 0 80px;
-	text-shadow: 5px 5px 7px black;
+/* Direct section children that are form tags */
+section > form {
+	background-color: rgba(131, 131, 131, 0.5);
+	color: white;
 }
-button:first-child {
-	width: 25px;
+/* Direct section children that are span tags */
+section > span {
 	float: right;
+	margin: 3px 3px 0 0;
 }
-i {
-	margin-bottom: 6px;
+/* Undo button at top of page for sections */
+.sect_undo_btn {
+	background-color: white;
+	color: black;
+	float: none;
+	height: 25px;
 }
-input {
-	border-radius: 5px;
-}
-input[placeholder="URL"] {
-	display: block;
-	height: 1.5rem;
-	margin: 3px auto;
-	margin-bottom: 20px;
-	text-align: center;
-	width: 75%
-}
-fieldset {
-	border: 0;
-    display: flex;
-	flex-direction: column;
-	padding: 3px;
-}
-div > * {
-	display: inline-block;
-	height: 1.5rem;
-	margin-bottom: 5px;
-	width: 50%;
-	
-}
-div input {
-	float: left;
-}
-
-/* Experimental new structure for Car API (second comparison section)*/
 select {
 	display: flex;
 	width: 45%;
-	
 }
-.flex {
-	display: flex;
-	justify-content: space-evenly;
+.show {
+	display: inline-block;
 }
-.blah{
-	display: block;
-	margin: auto;
-	margin-bottom: 5px;
-	width: 50px;
+/* Buttons in top right corner of sections */
+span > button {
+	border-radius: 7px;
+	font-size: 13px;
+	font-weight: bold;
+	height: 25px;
+	width: 25px;
 }
-fieldset{
-	margin-top: 5px;
-	padding-top: 10px;
-	border-top: 1px solid black;
+/* Hint that displays when hovering over undo button */
+.undoBtnHint {
+	display: none;
+	position: absolute;
+	margin-left: -62px;
+	margin-top: -20px;
+	font-size: 12px;
+	background-color: rgb(18, 46, 124);
+	color: white;
+	width: 90px;
+	text-align: center;
+	border-radius: 5px;
 }
-
-
 /* End Main----------------------- */
