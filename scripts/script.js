@@ -310,7 +310,6 @@ function startup() {
 window.onload = startup;
 
 // GAMEPLAN
-    // 1) Display all and hide buttons for sections
     // 2) if first trim is just "" then display "none" for it
     // 3) If no trim available, then continue with spec output (Shelby Mustang problem),
     //   same prob for model (land rover) if no model then skip to specs
@@ -320,3 +319,5 @@ window.onload = startup;
     // 7) if user changes all dropdowns then changes year, only makes clears to "please select"
     //   need to clear others too 
     // 8) need minimum distance between sections if user removes sections
+    // 9) when deleting specs, lines between should be changed to bottom so when spec is deleted
+    //  there aren't two lines at top of spec list.
