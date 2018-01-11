@@ -13,265 +13,331 @@
     </head>
     <body> 
         <header>
-            <h1>Car Comparisons</h1>
+            <div>
+                <h1>Car Comparisons</h1>
+                <button class="sect_undo_btn"name="show_sect" type="button">
+                    <i class="fa fa-undo fa-2x" aria-hidden="true"></i>
+                </button>
+                <span class="undoBtnHint">Unhide Sections</span>
+            </div>
         </header>
         <main>
-            <section>
-                <button> 
-                    <i class="fa fa-window-minimize" aria-hidden="true"></i> 
-                </button> 
-                <h2></h2>
+            <section value="0">
+                <span>
+                    <button name="show_specs" type="button">
+                        <i class="fa fa-undo" aria-hidden="true"></i>
+                    </button>
+                    <span class="undoBtnHint">Unhide Specs</span>
+                    <button name="remove_sect" type="button" value="0">X</button> 
+                </span>
+                <h2>Car Name</h2>
                 <form>
-                    <div class="flex">
+                    <div>
                         <!-- WARNING: Do not change 'name' attribute. It is referenced in function 
                         that pulls data from API in Controller and updates UI dropdown with list -->
                         <select name="years" value="0"></select>
                         <select name="makes0" value="0"></select>
                     </div>
-                    <div class="flex">
+                    <div>
                         <select name="models0" value="0"></select>
                         <select name="trims0" value="0"></select>
                     </div>
                     <!-- <input type="text" name="URL" placeholder="URL"> -->
                     <fieldset>
-                        <div>
+                        <div name="spec0">
                             <p>Engine Type:</p>
                             <span name="engine_type0"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec1">
                             <p>Cylinders:</p>
                             <span name="cylinders0"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec2">
                             <p>Engine Size:</p>
                             <span name="engine_size0"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec3">
                             <p>Power:</p>
                             <span name="power0"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec4">
                             <p>Torque:</p>
                             <span name="torque0"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec5">
                             <p>Drive:</p>
                             <span name="drive0"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec6">
                             <p>Top Speed:</p>
                             <span name="top_speed0"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec7">
                             <p>Weight:</p>
                             <span name="weight0"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec8">
                             <p>MPG HWY:</p>
                             <span name="mpg_hwy0"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec9">
                             <p>MPG City:</p>
                             <span name="mpg_city0"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec10">
                             <p>Combined MPG:</p>
                             <span name="mpg_combined0"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>                        
                     </fieldset>
                 </form>
             </section>
-            <section>
-                <button> 
-                    <i class="fa fa-window-minimize" aria-hidden="true"></i> 
-                </button>
-                <h2></h2>                    
+            <section value="1">
+                <span>
+                    <button name="show_specs" type="button">
+                        <i class="fa fa-undo" aria-hidden="true"></i>
+                    </button>
+                    <span class="undoBtnHint">Unhide Specs</span>
+                    <button name="remove_sect" type="button" value="1">X</button> 
+                </span>
+                <h2>Car Name</h2>                    
                 <form>
-                    <div class="flex">
+                    <div>
                         <!-- WARNING: Do not change 'name' attribute. It is referenced in function 
                         that pulls data from API in Controller and updates UI dropdown with list -->
                         <select name="years" value="1"></select>
                         <select name="makes1" value="1"></select>
                     </div>
-                    <div class="flex">
+                    <div>
                         <select name="models1" value="1"></select>
                         <select name="trims1" value="1"></select>
                     </div>
                     <!-- <input type="text" name="URL" placeholder="URL"> -->
                     <fieldset>
-                        <div>
+                        <div name="spec0">
                             <p>Engine Type:</p>
                             <span name="engine_type1"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec1">
                             <p>Cylinders:</p>
                             <span name="cylinders1"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec2">
                             <p>Engine Size:</p>
                             <span name="engine_size1"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec3">
                             <p>Power:</p>
                             <span name="power1"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec4">
                             <p>Torque:</p>
                             <span name="torque1"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec5">
                             <p>Drive:</p>
                             <span name="drive1"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec6">
                             <p>Top Speed:</p>
                             <span name="top_speed1"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec7">
                             <p>Weight:</p>
                             <span name="weight1"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec8">
                             <p>MPG HWY:</p>
                             <span name="mpg_hwy1"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec9">
                             <p>MPG City:</p>
                             <span name="mpg_city1"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec10">
                             <p>Combined MPG:</p>
                             <span name="mpg_combined1"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>  
                     </fieldset>
                 </form>
             </section>
-            <section>
-                <button> 
-                    <i class="fa fa-window-minimize" aria-hidden="true"></i> 
-                </button>
-                <h2></h2>                    
+            <section value="2">
+                <span>
+                    <button name="show_specs" type="button">
+                        <i class="fa fa-undo" aria-hidden="true"></i>
+                    </button>
+                    <span class="undoBtnHint">Unhide Specs</span>
+                    <button name="remove_sect" type="button" value="2">X</button> 
+                </span>
+                <h2>Car Name</h2>                    
                 <form>
-                    <div class="flex">
+                    <div>
                         <!-- WARNING: Do not change 'name' attribute. It is referenced in function 
                         that pulls data from API in Controller and updates UI dropdown with list -->
                         <select name="years" value="2"></select>
                         <select name="makes2" value="2"></select>
                     </div>
-                    <div class="flex">
+                    <div>
                         <select name="models2" value="2"></select>
                         <select name="trims2" value="2"></select>
                     </div>
                     <!-- <input type="text" name="URL" placeholder="URL"> -->
                     <fieldset>
-                        <div>
+                        <div name="spec0">
                             <p>Engine Type:</p>
                             <span name="engine_type2"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec1">
                             <p>Cylinders:</p>
                             <span name="cylinders2"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec2">
                             <p>Engine Size:</p>
                             <span name="engine_size2"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec3">
                             <p>Power:</p>
                             <span name="power2"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec4">
                             <p>Torque:</p>
                             <span name="torque2"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec5">
                             <p>Drive:</p>
                             <span name="drive2"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec6">
                             <p>Top Speed:</p>
                             <span name="top_speed2"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec7">
                             <p>Weight:</p>
                             <span name="weight2"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec8">
                             <p>MPG HWY:</p>
                             <span name="mpg_hwy2"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec9">
                             <p>MPG City:</p>
                             <span name="mpg_city2"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec10">
                             <p>Combined MPG:</p>
                             <span name="mpg_combined2"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>   
                     </fieldset>
                 </form>
             </section>
-            <section>
-                <button> 
-                    <i class="fa fa-window-minimize" aria-hidden="true"></i> 
-                </button>
-                <h2></h2>                    
+            <section value="3">
+                <span>
+                    <button name="show_specs" type="button">
+                        <i class="fa fa-undo" aria-hidden="true"></i>
+                    </button>
+                    <span class="undoBtnHint">Unhide Specs</span>
+                    <button name="remove_sect" type="button" value="3">X</button> 
+                </span>
+                <h2>Car Name</h2>                    
                 <form>
-                    <div class="flex">
+                    <div>
                         <!-- WARNING: Do not change 'name' attribute. It is referenced in function 
                         that pulls data from API in Controller and updates UI dropdown with list -->
                         <select name="years" value="3"></select>
                         <select name="makes3" value="3"></select>
                     </div>
-                    <div class="flex">
+                    <div>
                         <select name="models3" value="3"></select>
                         <select name="trims3" value="3"></select>
                     </div>
                     <!-- <input type="text" name="URL" placeholder="URL"> -->
                     <fieldset>
-                        <div>
+                        <div name="spec0">
                             <p>Engine Type:</p>
                             <span name="engine_type3"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec1">
                             <p>Cylinders:</p>
                             <span name="cylinders3"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec2">
                             <p>Engine Size:</p>
                             <span name="engine_size3"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec3">
                             <p>Power:</p>
                             <span name="power3"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec4">
                             <p>Torque:</p>
                             <span name="torque3"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec5">
                             <p>Drive:</p>
                             <span name="drive3"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec6">
                             <p>Top Speed:</p>
                             <span name="top_speed3"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec7">
                             <p>Weight:</p>
                             <span name="weight3"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec8">
                             <p>MPG HWY:</p>
                             <span name="mpg_hwy3"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec9">
                             <p>MPG City:</p>
                             <span name="mpg_city3"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
-                        <div>
+                        <div name="spec10">
                             <p>Combined MPG:</p>
                             <span name="mpg_combined3"></span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div> 
                     </fieldset>
                 </form>

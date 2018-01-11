@@ -60,7 +60,85 @@ class Model {
 
 class View {
     constructor() {
-        
+        // this.showXButton();
+        // this.removeXButton();
+        // this.removeData();
+        // this.showData();
+    }    
+    showXButton() {
+        document.querySelector('main').addEventListener('mouseover',(e) => {
+            // ***** change to non var varibles?
+            var divName = e.target.getAttribute('name')         // ---> Store attribute values (if any) in variables. One from possible
+            var parentName = e.target.parentNode.getAttribute('name');   // correct div, another from possible child of correct div
+            
+            if (parentName) {                          // ---> If parent attribute value exists, see if it includes 'spec'
+                if(parentName.includes('spec')) {                   
+                    e.target.parentNode.lastElementChild.classList.remove('hide');
+                } return;               
+            } 
+            if(divName) {                             // ---> If attribute value exists on div, see if it includes 'spec'
+                if(divName.includes('spec')){                       
+                    e.target.lastElementChild.classList.remove('hide');
+                } return;
+            }
+        }); 
+    };    
+    removeXButton() {
+        document.querySelector('main').addEventListener('mouseout',(e) => {
+
+            var divName = e.target.getAttribute('name')         // ---> Store attribute values in (if any) variables. One from possible
+            var parentName = e.target.parentNode.getAttribute('name');    // correct div, another from possible child of correct div
+            
+            if (parentName) {                           // ---> If parent attribute value exists, see if it includes 'spec'                                       
+                if(parentName.includes('spec')) {                   
+                    e.target.parentNode.lastElementChild.classList.add('hide');
+                } return;               
+            } 
+            if(divName) {                             // ---> If attribute value exists on div, see if it includes 'spec'               
+                if(divName.includes('spec')){                       
+                    e.target.lastElementChild.classList.add('hide');
+                } return;
+            }    
+        }); 
+    }
+    removeData() {
+        document.querySelector('main').addEventListener('click', (e) => {
+            if(e.target.getAttribute('name') === 'remove_spec') {            // ---> If 'X' button next to a spec is clicked, get
+                var attribName = e.target.parentNode.getAttribute('name');  // parentNode name attribute & create array of that div from 
+                var nameArray = document.getElementsByName(attribName);         // all sections
+
+                for(var i = 0; i < nameArray.length; i++) {                      // ---> For each section, hide that particular div
+                    nameArray[i].classList.add('hide');
+                }
+
+            } else if(e.target.getAttribute('name') === 'remove_sect') {            // ---> if section 'X' button clicked, find value
+                var xValue = e.target.getAttribute('value');                          // attribute of button & hide respective section
+                document.querySelector(`section[value="${xValue}"]`).classList.add('hide');
+            } return;
+        });
+    }
+    showData() {
+        document.addEventListener('click', (e) => {             // ---> If undo button (or 'i' icon from fontawesome) on section is 
+            if(e.target.getAttribute('name') === 'show_specs'       // clicked then previously hidden specs become visible again.
+                || e.target.parentNode.getAttribute('name') === 'show_specs') {                            
+                
+                var divArray = document.querySelectorAll('div[class="hide"]');      
+
+                for(var i = 0; i < divArray.length; i++) { 
+                    divArray[i].classList.remove('hide');
+                }                
+
+            } else if(e.target.getAttribute('name') === 'show_sect'            // ---> If undo button (or 'i' icon from fontawesome)
+                || e.target.parentNode.getAttribute('name') === 'show_sect') {  // is clicked, then previously hidden sections are shown.
+                
+                var sectArray = document.querySelectorAll('section[class="hide"]');  
+
+                for(var i = 0; i < sectArray.length; i++) { 
+                    sectArray[i].classList.remove('hide');   
+                } return;
+                
+            } return;
+        });
     }
     arrayToOptions(array) {
         let valuesArray = array.map(component => `<option>${component}</option>`);  
@@ -78,6 +156,7 @@ class Controller {
         this.projectModel = new Model();
         this.projectView = new View();
         this.ajaxRequest = new XMLHttpRequest();
+        this.showHideData();
         this.userYearInput;
         this.userMakeInput;
         this.userModelInput; 
@@ -89,6 +168,12 @@ class Controller {
         this.specsData;
         this.getSpecs;
         this.dropdownListener();
+    }
+    showHideData() {            // ---> Adds/starts listeners for removal or re-display of specs or sections that user does or does not want.
+        this.projectView.showXButton();
+        this.projectView.removeXButton();
+        this.projectView.removeData();
+        this.projectView.showData();
     }    
     getYears() {                                   // ---> Place years in all for year dropdowns.
 
@@ -234,3 +319,4 @@ window.onload = startup;
     // 6) may not need all the value attributes on index.html besides for trims
     // 7) if user changes all dropdowns then changes year, only makes clears to "please select"
     //   need to clear others too 
+    // 8) need minimum distance between sections if user removes sections
