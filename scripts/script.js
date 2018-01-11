@@ -60,24 +60,25 @@ class Model {
 
 class View {
     constructor() {
-        this.showXButton();
-        this.removeXButton();
-        this.removeSpec();
+        // this.showXButton();
+        // this.removeXButton();
+        // this.removeData();
+        // this.showData();
     }    
     showXButton() {
         document.querySelector('main').addEventListener('mouseover',(e) => {
             // ***** change to non var varibles?
-            var divName = e.srcElement.getAttribute('name')         // ---> Store attribute values (if any) in variables. One from possible
-            var parentName = e.srcElement.parentNode.getAttribute('name');   // correct div, another from possible child of correct div
+            var divName = e.target.getAttribute('name')         // ---> Store attribute values (if any) in variables. One from possible
+            var parentName = e.target.parentNode.getAttribute('name');   // correct div, another from possible child of correct div
             
             if (parentName) {                          // ---> If parent attribute value exists, see if it includes 'spec'
                 if(parentName.includes('spec')) {                   
-                    e.srcElement.parentNode.lastElementChild.classList.remove('hide');
+                    e.target.parentNode.lastElementChild.classList.remove('hide');
                 } return;               
             } 
             if(divName) {                             // ---> If attribute value exists on div, see if it includes 'spec'
                 if(divName.includes('spec')){                       
-                    e.srcElement.lastElementChild.classList.remove('hide');
+                    e.target.lastElementChild.classList.remove('hide');
                 } return;
             }
         }); 
@@ -85,29 +86,57 @@ class View {
     removeXButton() {
         document.querySelector('main').addEventListener('mouseout',(e) => {
 
-            var divName = e.srcElement.getAttribute('name')         // ---> Store attribute values in (if any) variables. One from possible
-            var parentName = e.srcElement.parentNode.getAttribute('name');    // correct div, another from possible child of correct div
+            var divName = e.target.getAttribute('name')         // ---> Store attribute values in (if any) variables. One from possible
+            var parentName = e.target.parentNode.getAttribute('name');    // correct div, another from possible child of correct div
             
             if (parentName) {                           // ---> If parent attribute value exists, see if it includes 'spec'                                       
                 if(parentName.includes('spec')) {                   
-                    e.srcElement.parentNode.lastElementChild.classList.add('hide');
+                    e.target.parentNode.lastElementChild.classList.add('hide');
                 } return;               
             } 
             if(divName) {                             // ---> If attribute value exists on div, see if it includes 'spec'               
                 if(divName.includes('spec')){                       
-                    e.srcElement.lastElementChild.classList.add('hide');
+                    e.target.lastElementChild.classList.add('hide');
                 } return;
             }    
         }); 
     }
-    removeSpec() {
+    removeData() {
         document.querySelector('main').addEventListener('click', (e) => {
-            if(e.srcElement.textContent === 'x') {                              // ---> If the element clicked is the 'X' button, get
-                var attribName = e.srcElement.parentNode.getAttribute('name');  // parentNode name attribute & create array of that div from 
+            if(e.target.getAttribute('name') === 'remove_spec') {            // ---> If 'X' button next to a spec is clicked, get
+                var attribName = e.target.parentNode.getAttribute('name');  // parentNode name attribute & create array of that div from 
                 var nameArray = document.getElementsByName(attribName);         // all sections
 
-                for(var i = 0; i < nameArray.length; i++)                       // ---> For each section, hide that particular div
+                for(var i = 0; i < nameArray.length; i++) {                      // ---> For each section, hide that particular div
                     nameArray[i].classList.add('hide');
+                }
+
+            } else if(e.target.getAttribute('name') === 'remove_sect') {            // ---> if section 'X' button clicked, find value
+                var xValue = e.target.getAttribute('value');                          // attribute of button & hide respective section
+                document.querySelector(`section[value="${xValue}"]`).classList.add('hide');
+            } return;
+        });
+    }
+    showData() {
+        document.addEventListener('click', (e) => {             // ---> If undo button (or 'i' icon from fontawesome) on section is 
+            if(e.target.getAttribute('name') === 'show_specs'       // clicked then previously hidden specs become visible again.
+                || e.target.parentNode.getAttribute('name') === 'show_specs') {                            
+                
+                var divArray = document.querySelectorAll('div[class="hide"]');      
+
+                for(var i = 0; i < divArray.length; i++) { 
+                    divArray[i].classList.remove('hide');
+                }                
+
+            } else if(e.target.getAttribute('name') === 'show_sect'            // ---> If undo button (or 'i' icon from fontawesome)
+                || e.target.parentNode.getAttribute('name') === 'show_sect') {  // is clicked, then previously hidden sections are shown.
+                
+                var sectArray = document.querySelectorAll('section[class="hide"]');  
+
+                for(var i = 0; i < sectArray.length; i++) { 
+                    sectArray[i].classList.remove('hide');   
+                } return;
+                
             } return;
         });
     }
@@ -138,8 +167,15 @@ class Controller {
         this.userMakeInput;
         this.userModelInput;
         this.userTrimInput;
-        this.finalDraftDataPull();
+        this.showHideData();
+        // this.finalDraftDataPull();
         // this.confirmSpecPull();   
+    }
+    showHideData() {            // ---> Adds/starts listeners for removal or re-display of specs or sections that user does or does not want.
+        this.projectView.showXButton();
+        this.projectView.removeXButton();
+        this.projectView.removeData();
+        this.projectView.showData();
     }
     updateDropdowns(element, dropdownData) {          // ---> Calls 2 functions of View class, wraps array components in <option>, places
         this.projectView.dropDownListApi(element, this.projectView.arrayToListApi(dropdownData));   // elements in index.html. 2 parameters: 
@@ -304,12 +340,6 @@ function startup() {
 window.onload = startup;
 
 // GAMEPLAN
-    // 1) Change car name at section top to user selection
-    // 2) Display all and hide buttons for sections
     // 3) if first trim is just "" then display "none" for it
-    // 4) Removal of event listener prevents it from reloading for another choice if
-    //  user changes any dropdowns besides year (which adds all listeners again). Place
-    //  removals after chain start, but before individual sub listeners
-    // 5) should the showXButton, removeXButton, removeSpec functions be in the View or
-    //  class?
+    // 6) need minimum distance between sections if user removes sections
    

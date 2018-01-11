@@ -38,35 +38,33 @@ html {
 /* General Page End----------------- */
 
 /* Main Start----------------------- */
-button:first-child {
-	float: right;
-	width: 25px;
+button:hover {
+	cursor: pointer;
 }
+/* Displays hint when hovering over undo buttons */
+button:hover + .undoBtnHint {
+	display: inline-block;
+}
+/* Spec name */
 div > p {
 	display: inline-block;
 	width: 50%;	
 }
-div > span:first-of-type {
-	display: inline;
-    position: absolute;
-}
-div > span:nth-of-type(2) {
+/* Hidden 'X' button for spec lines */
+div > button {
 	background-color: rgb(18, 46, 124);
-	border-radius: 25px;
-	color: white; 
+	border-radius: 5px;
+	color: whitesmoke; 
 	float: right;
 	font-weight: lighter;
-	margin-top: -2px;
 	position: relative; 
 	text-align: center; 
 	width: 1.5rem;
 	z-index: 1;
 }
-div > span:nth-of-type(2):active {
-	border: 1px solid white;
-}
-div > span:nth-of-type(2):hover {
-	cursor: pointer;
+/* Hidden 'X' button for spec lines */
+div > button:active {
+	border: 2px solid white;
 }
 fieldset {
 	border: 0;
@@ -75,6 +73,7 @@ fieldset {
 	flex-direction: column;
 	padding: 3px;
 }
+/* All fieldset children that are divs */
 fieldset div {
 	border-top: 1px solid black;
 	padding-top: 5px;
@@ -82,16 +81,21 @@ fieldset div {
 fieldset div:first-child {
 	border-top: none;
 }
+/* Direct div children of the form */
 form > div {
 	display: flex;
 	justify-content: space-evenly;
 	margin-bottom: 5px;
 }
+/* Direct div children of header */
+header > div {
+	text-align: center;
+	padding-bottom: 55px;
+}
 h1 {
 	color: rgb(18, 46, 124);
-	margin: 25px auto 55px;
-	text-align: center;
-	text-shadow: 3px 3px 4px rgb(121, 121, 121);
+	margin: 25px auto 5px;
+	text-shadow: 2px 2px 3px rgb(223, 223, 223);
 }
 h2 {
 	background: linear-gradient(rgb(18, 46, 124), 75%, rgba(131, 131, 131, 0.5));
@@ -103,17 +107,12 @@ h2 {
 .hide {
 	display: none;
 }
-i {
-	margin-bottom: 6px;
-}
-input {
-	border-radius: 5px;
-}
 main {
     display: flex;
 	flex-wrap: wrap;
 	justify-content: space-evenly;
 }
+/* Prevent too large of a distance between sections if very wide screen */
 @media only screen and (min-width: 1550px) {
     main {
 		max-width: 1550px;
@@ -128,9 +127,22 @@ section {
 	margin-top: 25px;
 	width: 280px;
 }
+/* Direct section children that are form tags */
 section > form {
-	background-color: rgba(131, 131, 131, 0.5); /*rgb(255, 255, 255, .1);*/
+	background-color: rgba(131, 131, 131, 0.5);
 	color: white;
+}
+/* Direct section children that are span tags */
+section > span {
+	float: right;
+	margin: 3px 3px 0 0;
+}
+/* Undo button at top of page for sections */
+.sect_undo_btn {
+	background-color: white;
+	color: black;
+	float: none;
+	height: 25px;
 }
 select {
 	display: flex;
@@ -138,5 +150,26 @@ select {
 }
 .show {
 	display: inline-block;
+}
+/* Buttons in top right corner of sections */
+span > button {
+	border-radius: 7px;
+	font-size: 13px;
+	font-weight: bold;
+	height: 25px;
+	width: 25px;
+}
+/* Hint that displays when hovering over undo button */
+.undoBtnHint {
+	display: none;
+	position: absolute;
+	margin-left: -62px;
+	margin-top: -20px;
+	font-size: 12px;
+	background-color: rgb(18, 46, 124);
+	color: white;
+	width: 90px;
+	text-align: center;
+	border-radius: 5px;
 }
 /* End Main----------------------- */

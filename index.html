@@ -13,13 +13,23 @@
     </head>
     <body> 
         <header>
-            <h1>Car Comparisons</h1>
+            <div>
+                <h1>Car Comparisons</h1>
+                <button class="sect_undo_btn"name="show_sect" type="button">
+                    <i class="fa fa-undo fa-2x" aria-hidden="true"></i>
+                </button>
+                <span class="undoBtnHint">Unhide Sections</span>
+            </div>
         </header>
         <main>
-            <section>
-                <button> 
-                    <i class="fa fa-window-minimize" aria-hidden="true"></i> 
-                </button> 
+            <section value="0">
+                <span>
+                    <button name="show_specs" type="button">
+                        <i class="fa fa-undo" aria-hidden="true"></i>
+                    </button>
+                    <span class="undoBtnHint">Unhide Specs</span>
+                    <button name="remove_sect" type="button" value="0">X</button> 
+                </span>
                 <h2>Car Name</h2>
                 <form>
                     <div>
@@ -37,65 +47,69 @@
                         <div name="spec0">
                             <p>Engine Type:</p>
                             <span name="engine_type0"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec1">
                             <p>Cylinders:</p>
                             <span name="cylinders0"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec2">
                             <p>Engine Size:</p>
                             <span name="engine_size0"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec3">
                             <p>Power:</p>
                             <span name="power0"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec4">
                             <p>Torque:</p>
                             <span name="torque0"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec5">
                             <p>Drive:</p>
                             <span name="drive0"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec6">
                             <p>Top Speed:</p>
                             <span name="top_speed0"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec7">
                             <p>Weight:</p>
                             <span name="weight0"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec8">
                             <p>MPG HWY:</p>
                             <span name="mpg_hwy0"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec9">
                             <p>MPG City:</p>
                             <span name="mpg_city0"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec10">
                             <p>Combined MPG:</p>
                             <span name="mpg_combined0"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>                        
                     </fieldset>
                 </form>
             </section>
-            <section>
-                <button> 
-                    <i class="fa fa-window-minimize" aria-hidden="true"></i> 
-                </button>
+            <section value="1">
+                <span>
+                    <button name="show_specs" type="button">
+                        <i class="fa fa-undo" aria-hidden="true"></i>
+                    </button>
+                    <span class="undoBtnHint">Unhide Specs</span>
+                    <button name="remove_sect" type="button" value="1">X</button> 
+                </span>
                 <h2>Car Name</h2>                    
                 <form>
                     <div>
@@ -113,65 +127,69 @@
                         <div name="spec0">
                             <p>Engine Type:</p>
                             <span name="engine_type1"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec1">
                             <p>Cylinders:</p>
                             <span name="cylinders1"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec2">
                             <p>Engine Size:</p>
                             <span name="engine_size1"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec3">
                             <p>Power:</p>
                             <span name="power1"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec4">
                             <p>Torque:</p>
                             <span name="torque1"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec5">
                             <p>Drive:</p>
                             <span name="drive1"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec6">
                             <p>Top Speed:</p>
                             <span name="top_speed1"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec7">
                             <p>Weight:</p>
                             <span name="weight1"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec8">
                             <p>MPG HWY:</p>
                             <span name="mpg_hwy1"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec9">
                             <p>MPG City:</p>
                             <span name="mpg_city1"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec10">
                             <p>Combined MPG:</p>
                             <span name="mpg_combined1"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>  
                     </fieldset>
                 </form>
             </section>
-            <section>
-                <button> 
-                    <i class="fa fa-window-minimize" aria-hidden="true"></i> 
-                </button>
+            <section value="2">
+                <span>
+                    <button name="show_specs" type="button">
+                        <i class="fa fa-undo" aria-hidden="true"></i>
+                    </button>
+                    <span class="undoBtnHint">Unhide Specs</span>
+                    <button name="remove_sect" type="button" value="2">X</button> 
+                </span>
                 <h2>Car Name</h2>                    
                 <form>
                     <div>
@@ -189,65 +207,69 @@
                         <div name="spec0">
                             <p>Engine Type:</p>
                             <span name="engine_type2"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec1">
                             <p>Cylinders:</p>
                             <span name="cylinders2"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec2">
                             <p>Engine Size:</p>
                             <span name="engine_size2"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec3">
                             <p>Power:</p>
                             <span name="power2"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec4">
                             <p>Torque:</p>
                             <span name="torque2"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec5">
                             <p>Drive:</p>
                             <span name="drive2"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec6">
                             <p>Top Speed:</p>
                             <span name="top_speed2"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec7">
                             <p>Weight:</p>
                             <span name="weight2"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec8">
                             <p>MPG HWY:</p>
                             <span name="mpg_hwy2"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec9">
                             <p>MPG City:</p>
                             <span name="mpg_city2"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec10">
                             <p>Combined MPG:</p>
                             <span name="mpg_combined2"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>   
                     </fieldset>
                 </form>
             </section>
-            <section>
-                <button> 
-                    <i class="fa fa-window-minimize" aria-hidden="true"></i> 
-                </button>
+            <section value="3">
+                <span>
+                    <button name="show_specs" type="button">
+                        <i class="fa fa-undo" aria-hidden="true"></i>
+                    </button>
+                    <span class="undoBtnHint">Unhide Specs</span>
+                    <button name="remove_sect" type="button" value="3">X</button> 
+                </span>
                 <h2>Car Name</h2>                    
                 <form>
                     <div>
@@ -265,57 +287,57 @@
                         <div name="spec0">
                             <p>Engine Type:</p>
                             <span name="engine_type3"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec1">
                             <p>Cylinders:</p>
                             <span name="cylinders3"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec2">
                             <p>Engine Size:</p>
                             <span name="engine_size3"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec3">
                             <p>Power:</p>
                             <span name="power3"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec4">
                             <p>Torque:</p>
                             <span name="torque3"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec5">
                             <p>Drive:</p>
                             <span name="drive3"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec6">
                             <p>Top Speed:</p>
                             <span name="top_speed3"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec7">
                             <p>Weight:</p>
                             <span name="weight3"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec8">
                             <p>MPG HWY:</p>
                             <span name="mpg_hwy3"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec9">
                             <p>MPG City:</p>
                             <span name="mpg_city3"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div>
                         <div name="spec10">
                             <p>Combined MPG:</p>
                             <span name="mpg_combined3"></span>
-                            <span class="hide">x</span>
+                            <button class="hide" name="remove_spec" type="button">X</button>
                         </div> 
                     </fieldset>
                 </form>
