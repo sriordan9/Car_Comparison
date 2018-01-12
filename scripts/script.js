@@ -168,6 +168,7 @@ class Controller {
         this.specsData;
         this.getSpecs;
         this.dropdownListener();
+        this.clearOptions;
     }
     showHideData() {            // ---> Adds/starts listeners for removal or re-display of specs or sections that user does or does not want.
         this.projectView.showXButton();
@@ -187,7 +188,7 @@ class Controller {
         
                 dropdown.innerHTML = this.projectView.arrayToOptions(yearsArray);
             }); 
-        });        
+        });       
     }
     getMakes(e) {                                  // ---> Pull and load make data
 
@@ -288,9 +289,11 @@ class Controller {
 
             if(e.target.getAttribute('name').includes('years')) {
                 this.getMakes(e);
+                this.clearOptions(e);               // ---> Clear dropdowns that follow
         
             } else if(e.target.getAttribute('name').includes('makes')) {
                 this.getModels(e);
+                this.clearOptions(e); 
 
             } else if(e.target.getAttribute('name').includes('models')){
                 this.projectView.updateSectionHeader(e);
@@ -300,7 +303,18 @@ class Controller {
                 this.getSpecs(e);
             }
         });
-    }     
+    }
+    clearOptions(e) {                           // ---> When previous dropdown choice is changed, following dropdowns clear
+        if(e.target.getAttribute('name').includes('years')) {                // ---> If years changed, clear models & trims
+            var nextDiv = e.target.parentNode.nextElementSibling;
+            nextDiv.firstElementChild.innerHTML = '';
+            nextDiv.lastElementChild.innerHTML = '';
+    
+        } else if(e.target.getAttribute('name').includes('makes')) {                    // ---> If makes changed, clear trims
+            e.target.parentNode.nextElementSibling.lastElementChild.innerHTML = '';
+
+        } return;
+    }   
 }
 
 function startup() {
@@ -310,14 +324,13 @@ function startup() {
 window.onload = startup;
 
 // GAMEPLAN
-    // 2) if first trim is just "" then display "none" for it
-    // 3) If no trim available, then continue with spec output (Shelby Mustang problem),
-    //   same prob for model (land rover) if no model then skip to specs
-    // 4) convert to ES5 when done
-    // 5) make let, const, and var uniform throughout
-    // 6) may not need all the value attributes on index.html besides for trims
-    // 7) if user changes all dropdowns then changes year, only makes clears to "please select"
-    //   need to clear others too 
-    // 8) need minimum distance between sections if user removes sections
-    // 9) when deleting specs, lines between should be changed to bottom so when spec is deleted
+    // 1) If first trim is just "" then display "none" for it, then continue with spec output 
+    //  (Shelby Mustang problem), same prob for model (land rover) if no model then skip to specs
+    // 2) make let, const, and var uniform throughout
+    // 3) may not need all the value attributes on index.html besides for trims
+    // 4) when deleting specs, lines between should be changed to bottom so when spec is deleted
+    // 5) Remove specs which are often "unavailable"
+    // 6) need minimum distance between sections if user removes sections
     //  there aren't two lines at top of spec list.
+    // 7) mpg formula correct? (GTI prob)
+    // 8) convert to ES5 when done
