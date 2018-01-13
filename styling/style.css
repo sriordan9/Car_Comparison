@@ -71,15 +71,12 @@ fieldset {
 	border-top: 2px solid black;
     display: flex;
 	flex-direction: column;
-	padding: 3px;
+	padding: 0 3px 3px 3px;
 }
 /* All fieldset children that are divs */
 fieldset div {
-	border-top: 1px solid black;
-	padding-top: 5px;
-}
-fieldset div:first-child {
-	border-top: none;
+	border-bottom: 1px solid black;
+	margin-top: 8px;
 }
 /* Direct div children of the form */
 form > div {
