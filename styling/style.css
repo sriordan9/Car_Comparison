@@ -35,6 +35,11 @@ html {
 	background-position: center center;
 	background-repeat: no-repeat;
 }
+@media only screen and (max-width: 599px) {
+    html {
+		background: none;
+	}
+}
 /* General Page End----------------- */
 
 /* Main Start----------------------- */
@@ -86,13 +91,28 @@ form > div {
 }
 /* Direct div children of header */
 header > div {
-	text-align: center;
 	padding-bottom: 55px;
+	text-align: center;
+}
+@media only screen and (max-width: 599px) {
+    header > div {
+		background-color: rgb(18, 46, 124);
+		margin-bottom: 25px;
+		padding-bottom: 25px;
+	}
 }
 h1 {
 	color: rgb(18, 46, 124);
 	margin: 25px auto 5px;
 	text-shadow: 2px 2px 3px rgb(223, 223, 223);
+}
+@media only screen and (max-width: 599px) {
+    h1 {
+		color: white;
+		margin: 0 auto 5px;
+		padding-top: 25px;
+		text-shadow: 5px 5px 6px black;
+	}
 }
 h2 {
 	background: linear-gradient(rgb(18, 46, 124), 75%, rgba(131, 131, 131, 0.5));
