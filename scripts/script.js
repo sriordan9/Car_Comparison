@@ -60,14 +60,11 @@ class Model {
 
 class View {
     constructor() {
-        // this.showXButton();
-        // this.removeXButton();
-        // this.removeData();
-        // this.showData();
+       
     }    
     showXButton() {
         document.querySelector('main').addEventListener('mouseover',(e) => {
-            // ***** change to non var varibles?
+        
             var divName = e.target.getAttribute('name')         // ---> Store attribute values (if any) in variables. One from possible
             var parentName = e.target.parentNode.getAttribute('name');   // correct div, another from possible child of correct div
             
@@ -328,9 +325,8 @@ window.onload = startup;
     //  (Shelby Mustang problem), same prob for model (land rover) if no model then skip to specs
     // 2) make let, const, and var uniform throughout
     // 3) may not need all the value attributes on index.html besides for trims
-    // 4) when deleting specs, lines between should be changed to bottom so when spec is deleted
-    // 5) Remove specs which are often "unavailable"
-    // 6) need minimum distance between sections if user removes sections
+    // 4) Remove specs which are often "unavailable"
+    // 5) need minimum distance between sections if user removes sections
     //  there aren't two lines at top of spec list.
-    // 7) mpg formula correct? (GTI prob)
-    // 8) convert to ES5 when done
+    // 6) mpg formula correct? (GTI prob)
+    // 7) convert to ES5 when done
